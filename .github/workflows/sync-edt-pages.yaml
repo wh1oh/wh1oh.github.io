@@ -47,10 +47,21 @@ jobs:
             git commit -m "chore: remove edt-pages submodule record" || true
           fi
 
-      - name: Clone EDT-Pages into edt-pages/
+      - name: Clone or pull EDT-Pages into edt-pages/
         run: |
-          git clone --depth=1 --branch "${BRANCH}" "${UPSTREAM_URL}" edt-pages
-          rm -rf edt-pages/.git
+          if [ -d "edt-pages" ]; then
+            echo "edt-pages/ exists, pulling latest..."
+            cd edt-pages
+            git init
+            git remote add origin "${UPSTREAM_URL}" 2>/dev/null || git remote set-url origin "${UPSTREAM_URL}"
+            git fetch origin "${BRANCH}" --depth=1
+            git reset --hard "origin/${BRANCH}"
+            rm -rf .git
+          else
+            echo "edt-pages/ not found, cloning..."
+            git clone --depth=1 --branch "${BRANCH}" "${UPSTREAM_URL}" edt-pages
+            rm -rf edt-pages/.git
+          fi
 
       - name: Patch edt-pages/admin/index.html
         run: |
