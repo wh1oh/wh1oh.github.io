@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout wh1oh.github.io
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
         with:
           ref: main
           fetch-depth: 0
@@ -38,52 +38,33 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Add upstream remote and fetch
+      - name: Clone or pull EDT-Pages into edt-pages/
         run: |
-          git remote add edt-upstream "${UPSTREAM_URL}" || true
-          git fetch edt-upstream "${BRANCH}"
-
-      - name: Check for upstream updates
-        id: check
-        run: |
-          UPSTREAM_COMMIT=$(git rev-parse "edt-upstream/${BRANCH}")
-          MARKER_FILE="edt-pages/.upstream-commit"
-
-          if [ -f "${MARKER_FILE}" ] && [ "$(cat ${MARKER_FILE})" = "${UPSTREAM_COMMIT}" ]; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-            echo "edt-pages/ is already up to date, skipping sync"
+          if [ ! -d "edt-pages" ]; then
+            echo "edt-pages/ not found, cloning..."
+            git clone --branch "${BRANCH}" "${UPSTREAM_URL}" edt-pages
           else
-            echo "skip=false" >> $GITHUB_OUTPUT
-            echo "UPSTREAM_COMMIT=${UPSTREAM_COMMIT}" >> $GITHUB_OUTPUT
-            echo "Upstream changes detected, proceeding with sync"
+            echo "edt-pages/ exists, pulling latest..."
+            cd edt-pages
+            git pull -X theirs origin "${BRANCH}"
           fi
 
-      - name: Merge upstream into edt-pages/
-        if: steps.check.outputs.skip == 'false'
+      - name: Patch edt-pages/admin/index.html
         run: |
-          set -e
+          FILE="edt-pages/admin/index.html"
 
-          mkdir -p edt-pages
+          perl -i -0pe 's/(\{ label: "CF官方列表v4")/{ label: "个人列表v4", family: "ipv4", url: "https:\/\/raw.githubusercontent.com\/legalishomo\/cc\/refs\/heads\/main\/US_ip.txt" },\n                    $1/' "$FILE"
 
-          # 将上游文件直接 checkout 到 edt-pages/ 子目录，冲突以上游为准
-          git checkout "edt-upstream/${BRANCH}" -- .
-          git ls-tree -r --name-only "edt-upstream/${BRANCH}" | while read f; do
-            mkdir -p "edt-pages/$(dirname "$f")"
-            git show "edt-upstream/${BRANCH}:$f" > "edt-pages/$f"
-          done
-
-          # 记录本次同步的 upstream commit
-          echo "${{ steps.check.outputs.UPSTREAM_COMMIT }}" > edt-pages/.upstream-commit
+          perl -i -0pe 's/(id="limitInput"[^>]*?)value="512"/\1value="4096"/' "$FILE"
 
       - name: Commit and push changes
-        if: steps.check.outputs.skip == 'false'
         run: |
           git add edt-pages/
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "chore: sync EDT-Pages $(date -u '+%Y-%m-%d %H:%M UTC') [${{ steps.check.outputs.UPSTREAM_COMMIT }}]"
+            git commit -m "chore: sync EDT-Pages $(date -u '+%Y-%m-%d %H:%M UTC')"
             git push origin main
           fi
 
@@ -95,5 +76,3 @@ jobs:
           echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
           echo "| Branch | ${BRANCH} |" >> $GITHUB_STEP_SUMMARY
           echo "| Upstream URL | ${UPSTREAM_URL} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Upstream Commit | ${{ steps.check.outputs.UPSTREAM_COMMIT }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Skipped | ${{ steps.check.outputs.skip }} |" >> $GITHUB_STEP_SUMMARY
