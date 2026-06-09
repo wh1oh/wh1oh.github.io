@@ -38,20 +38,19 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Clone or pull EDT-Pages into edt-pages/
+      - name: Remove submodule record if exists
         run: |
-          if [ ! -d "edt-pages" ]; then
-            echo "edt-pages/ not found, cloning..."
-            git clone --branch "${BRANCH}" "${UPSTREAM_URL}" edt-pages
-            # 删掉内层 .git，避免被识别为 submodule
-            rm -rf edt-pages/.git
-          else
-            echo "edt-pages/ exists, pulling latest..."
-            cd edt-pages
-            git pull -X theirs origin "${BRANCH}"
-            # pull 完再删掉 .git
-            rm -rf .git
+          if git ls-files --stage edt-pages | grep -q '^160000'; then
+            echo "edt-pages is a submodule, removing from index..."
+            git rm --cached edt-pages
+            rm -f .gitmodules
+            git commit -m "chore: remove edt-pages submodule record" || true
           fi
+
+      - name: Clone EDT-Pages into edt-pages/
+        run: |
+          git clone --depth=1 --branch "${BRANCH}" "${UPSTREAM_URL}" edt-pages
+          rm -rf edt-pages/.git
 
       - name: Patch edt-pages/admin/index.html
         run: |
