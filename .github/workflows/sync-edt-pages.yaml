@@ -1,0 +1,99 @@
+name: Sync EDT-Pages to edt-pages/
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      upstream_url:
+        description: 'Upstream repository URL'
+        required: true
+        default: 'https://github.com/EDT-Pages/EDT-Pages.github.io.git'
+      branch:
+        description: 'Branch to sync'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    env:
+      BRANCH: ${{ github.event.inputs.branch || 'main' }}
+      UPSTREAM_URL: ${{ github.event.inputs.upstream_url || 'https://github.com/EDT-Pages/EDT-Pages.github.io.git' }}
+
+    steps:
+      - name: Checkout wh1oh.github.io
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set Git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote and fetch
+        run: |
+          git remote add edt-upstream "${UPSTREAM_URL}" || true
+          git fetch edt-upstream "${BRANCH}"
+
+      - name: Check for upstream updates
+        id: check
+        run: |
+          UPSTREAM_COMMIT=$(git rev-parse "edt-upstream/${BRANCH}")
+          MARKER_FILE="edt-pages/.upstream-commit"
+
+          if [ -f "${MARKER_FILE}" ] && [ "$(cat ${MARKER_FILE})" = "${UPSTREAM_COMMIT}" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "edt-pages/ is already up to date, skipping sync"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "UPSTREAM_COMMIT=${UPSTREAM_COMMIT}" >> $GITHUB_OUTPUT
+            echo "Upstream changes detected, proceeding with sync"
+          fi
+
+      - name: Merge upstream into edt-pages/
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          set -e
+
+          mkdir -p edt-pages
+
+          # 将上游文件直接 checkout 到 edt-pages/ 子目录，冲突以上游为准
+          git checkout "edt-upstream/${BRANCH}" -- .
+          git ls-tree -r --name-only "edt-upstream/${BRANCH}" | while read f; do
+            mkdir -p "edt-pages/$(dirname "$f")"
+            git show "edt-upstream/${BRANCH}:$f" > "edt-pages/$f"
+          done
+
+          # 记录本次同步的 upstream commit
+          echo "${{ steps.check.outputs.UPSTREAM_COMMIT }}" > edt-pages/.upstream-commit
+
+      - name: Commit and push changes
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          git add edt-pages/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: sync EDT-Pages $(date -u '+%Y-%m-%d %H:%M UTC') [${{ steps.check.outputs.UPSTREAM_COMMIT }}]"
+            git push origin main
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch | ${BRANCH} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Upstream URL | ${UPSTREAM_URL} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Upstream Commit | ${{ steps.check.outputs.UPSTREAM_COMMIT }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Skipped | ${{ steps.check.outputs.skip }} |" >> $GITHUB_STEP_SUMMARY
