@@ -43,10 +43,14 @@ jobs:
           if [ ! -d "edt-pages" ]; then
             echo "edt-pages/ not found, cloning..."
             git clone --branch "${BRANCH}" "${UPSTREAM_URL}" edt-pages
+            # 删掉内层 .git，避免被识别为 submodule
+            rm -rf edt-pages/.git
           else
             echo "edt-pages/ exists, pulling latest..."
             cd edt-pages
             git pull -X theirs origin "${BRANCH}"
+            # pull 完再删掉 .git
+            rm -rf .git
           fi
 
       - name: Patch edt-pages/admin/index.html
