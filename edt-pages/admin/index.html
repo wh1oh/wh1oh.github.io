@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -8996,12 +8996,21 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label for="emoji">Emoji</label>
-						<div class="input-wrapper">
-							<div class="checkbox-group">
-								<input type="checkbox" id="emoji" title="启用Emoji" onchange="markModified('convert')">
-								<label for="emoji" class="checkbox-label">启用</label>
+					<div class="checkbox-row">
+						<div class="form-group" id="emojiGroup">
+							<div class="input-wrapper">
+								<div class="checkbox-group">
+									<input type="checkbox" id="emoji" title="Emoji" onchange="markModified('convert')">
+									<label for="emoji" class="checkbox-label" title="Emoji">Emoji</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" id="subListGroup" style="display: none;">
+							<div class="input-wrapper">
+								<div class="checkbox-group">
+									<input type="checkbox" id="subList" title="仅输出节点信息" onchange="markModified('convert')">
+									<label for="subList" class="checkbox-label" title="仅输出节点信息">仅输出节点信息</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -11257,7 +11266,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 														data-tip="端口为 0 时，随机设置 443、2053、2083、2087、2096、8443 端口。">!</span>
 												</div>
 												<input class="input" id="portInput" type="number" min="0" max="65535"
-													step="1" value="443">
+													step="1" value="0">
 											</div>
 										</div>
 									</div>
@@ -16503,6 +16512,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 			document.getElementById('subAPI').value = currentConfig.订阅转换配置?.SUBAPI || '';
 			document.getElementById('subConfig').value = currentConfig.订阅转换配置?.SUBCONFIG || '';
 			document.getElementById('emoji').checked = currentConfig.订阅转换配置?.SUBEMOJI || false;
+			syncSubListOption();
 
 			// 消息通知设置 - 兼容两种config结构
 			// 优先读取 TG 字段，如果没有则读取 通知.Telegram
@@ -18201,12 +18211,26 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 			markModified('convert');
 		}
 
+		function syncSubListOption() {
+			const subListGroup = document.getElementById('subListGroup');
+			const hasSubList = currentConfig.订阅转换配置?.SUBLIST !== undefined;
+
+			subListGroup.style.display = hasSubList ? '' : 'none';
+			document.getElementById('subList').checked = hasSubList
+				? currentConfig.订阅转换配置?.SUBLIST || false
+				: false;
+		}
+
 		async function saveConvert() {
+			const hasSubList = currentConfig.订阅转换配置?.SUBLIST !== undefined;
 			currentConfig.订阅转换配置 = {
 				SUBAPI: document.getElementById('subAPI').value,
 				SUBCONFIG: document.getElementById('subConfig').value,
 				SUBEMOJI: document.getElementById('emoji').checked
 			};
+			if (hasSubList) {
+				currentConfig.订阅转换配置.SUBLIST = document.getElementById('subList').checked;
+			}
 
 			await saveConfigToServer('convert');
 		}
@@ -18319,6 +18343,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 				document.getElementById('subAPI').value = currentConfig.订阅转换配置?.SUBAPI || '';
 				document.getElementById('subConfig').value = currentConfig.订阅转换配置?.SUBCONFIG || '';
 				document.getElementById('emoji').checked = currentConfig.订阅转换配置?.SUBEMOJI || false;
+				syncSubListOption();
 				// 重新填充下拉框以恢复正确的选中状态
 				populateSubConfigSelect();
 			}
@@ -21965,6 +21990,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 					document.getElementById('subAPI').value = currentConfig.订阅转换配置?.SUBAPI || '';
 					document.getElementById('subConfig').value = currentConfig.订阅转换配置?.SUBCONFIG || '';
 					document.getElementById('emoji').checked = currentConfig.订阅转换配置?.SUBEMOJI || false;
+					syncSubListOption();
 				}
 			}
 

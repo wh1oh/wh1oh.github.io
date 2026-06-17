@@ -42,7 +42,8 @@
   "订阅转换配置": {
     "SUBAPI": "https://subapi.cmliussss.net",
     "SUBCONFIG": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini",
-    "SUBEMOJI": false
+    "SUBEMOJI": false,
+    "SUBLIST": false
   },
   "反代": {
     "PROXYIP": "auto",
