@@ -915,6 +915,15 @@
 			loginBtn.disabled = true;
 			loginBtn.classList.add('btn-loading');
 
+			// 清理所有 cookie，避免残留异常状态
+			const clearAllCookies = () => {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const name = cookies[i].split('=')[0].trim();
+					document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+				}
+			};
+
 			try {
 				const response = await fetch('/login', {
 					method: 'POST',
@@ -936,17 +945,20 @@
 						}
 					} else {
 						// 返回的是HTML，说明密码错误
+						clearAllCookies();
 						errorMsg.textContent = '密码错误，请重试';
 						errorMsg.classList.remove('login-error-hidden');
 						passwordInput.focus();
 						passwordInput.select();
 					}
 				} else {
+					clearAllCookies();
 					errorMsg.textContent = '登录失败，请重试';
 					errorMsg.classList.remove('login-error-hidden');
 				}
 			} catch (error) {
 				console.error('登录错误:', error);
+				clearAllCookies();
 				errorMsg.textContent = '网络错误，请检查连接';
 				errorMsg.classList.remove('login-error-hidden');
 			} finally {
