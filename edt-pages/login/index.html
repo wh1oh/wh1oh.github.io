@@ -663,7 +663,7 @@
 			width: 100%;
 			border-radius: 0 0 14px 14px;
 			transform-origin: left;
-			animation: countdownProgress 8s linear forwards;
+			animation: countdownProgress 5s linear forwards;
 			box-shadow: 0 0 8px #fff, 0 0 15px #f6821f;
 			z-index: 2;
 		}
@@ -804,7 +804,7 @@
 
 					// 按钮通用样式
 					const primaryBtnStyle = 'display: inline-block; background: linear-gradient(135deg, #faab41 0%, #f6821f 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 14px; font-weight: 700; font-size: 17px; box-shadow: 0 8px 16px rgba(246, 130, 31, 0.2); transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none; position: relative; overflow: hidden;';
-					const secondaryBtnStyle = 'display: inline-block; background: #f3f4f6; color: #9ca3af; text-decoration: none; padding: 16px 32px; border-radius: 14px; font-weight: 500; font-size: 16px; transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none;';
+					const secondaryBtnStyle = 'display: inline-block; background: #f9fafb; color: #9ca3af; text-decoration: none; padding: 14px 28px; border-radius: 14px; font-weight: 400; font-size: 14px; transition: all 0.3s ease; border: none; cursor: pointer; margin: 10px; outline: none;';
 
 					if (lang.toLowerCase().startsWith('zh')) {
 						// Chinese
@@ -875,7 +875,7 @@
 					// 8秒倒计时自动跳转
 					const redirectTimer = setTimeout(() => {
 						window.location.href = redirectUrl;
-					}, 8000);
+					}, 5000);
 
 					acceptBtn.onclick = () => {
 						clearTimeout(redirectTimer);
@@ -887,6 +887,8 @@
 						irModal.classList.remove('show');
 						enableLogin();
 					};
+
+					progressBar.style.animationDuration = '5s';
 				} else {
 					// Not IR user
 					enableLogin();
