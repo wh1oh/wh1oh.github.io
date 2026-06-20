@@ -219,6 +219,51 @@
 			letter-spacing: .3px
 		}
 
+		.label-with-hint {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-bottom: 8px;
+		}
+
+		.label-with-hint label {
+			margin: 0;
+		}
+
+		.inline-hint-btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 20px;
+			height: 20px;
+			padding: 0;
+			border: none;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #f59e0b 0, #d97706 100%);
+			color: #fff;
+			font-size: 13px;
+			font-weight: 700;
+			line-height: 1;
+			cursor: pointer;
+			box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
+			transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+		}
+
+		.inline-hint-btn:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 5px 14px rgba(245, 158, 11, 0.45);
+		}
+
+		.inline-hint-btn:active {
+			transform: translateY(0);
+			filter: brightness(.95);
+		}
+
+		.inline-hint-btn:focus-visible {
+			outline: 2px solid #f59e0b;
+			outline-offset: 2px;
+		}
+
 		.input-wrapper {
 			position: relative
 		}
@@ -4885,6 +4930,110 @@
 			overflow-y: auto;
 		}
 
+		.auth-help-modal {
+			max-width: 600px;
+			width: 95vw;
+			max-height: 85vh;
+			overflow-y: auto;
+			text-align: left;
+			padding: 24px;
+		}
+
+		/* 可视化逻辑链 */
+		.auth-logic-flow {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			margin: 20px 0 30px;
+			padding: 15px;
+			background: #f8fafc;
+			border-radius: 12px;
+			border: 1px dashed #cbd5e1;
+		}
+
+		.logic-node {
+			padding: 8px 12px;
+			border-radius: 8px;
+			font-size: 13px;
+			font-weight: 700;
+			color: #fff;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.node-vars { background: linear-gradient(135deg, #64748b, #475569); }
+		.node-uuid { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+		.node-token { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+
+		.logic-arrow { color: #94a3b8; font-weight: bold; }
+
+		.logic-node.active-token { outline: 2px solid #a855f7; outline-offset: 3px; }
+		.logic-node.active-uuid { outline: 2px solid #3b82f6; outline-offset: 3px; }
+		.logic-node.dimmed { opacity: 0.1; }
+
+		/* 卡片布局 */
+		.auth-help-card {
+			background: #fff;
+			border: 1px solid #e2e8f0;
+			border-radius: 12px;
+			padding: 16px;
+			margin-bottom: 16px;
+			transition: transform 0.2s;
+		}
+
+		.auth-help-card:hover { transform: translateY(-2px); }
+
+		.card-tag {
+			display: inline-block;
+			padding: 2px 8px;
+			border-radius: 4px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+
+		.tag-auto { background: #dcfce7; color: #166534; }
+		.tag-manual { background: #fee2e2; color: #991b1b; }
+
+		.auth-help-card h4 {
+			margin: 0 0 8px 0;
+			font-size: 15px;
+			color: #1e293b;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.auth-help-card p {
+			margin: 0;
+			font-size: 13.5px;
+			line-height: 1.6;
+			color: #475569;
+		}
+
+		/* 重写警示框 */
+		.auth-help-tip {
+			margin-top: 12px;
+			padding: 12px 16px;
+			border-radius: 10px;
+			background: #fff7ed;
+			border-left: 4px solid #f97316;
+			color: #9a3412;
+			font-size: 13px;
+		}
+
+		.auth-help-tip strong { color: #c2410c; }
+
+		/* 暗色模式适配 */
+		html.dark-mode .auth-logic-flow { background: #0f172a; border-color: #334155; }
+		html.dark-mode .auth-help-card { background: #1e293b; border-color: #334155; }
+		html.dark-mode .auth-help-card h4 { color: #f1f5f9; }
+		html.dark-mode .auth-help-card p { color: #94a3b8; }
+		html.dark-mode .auth-help-tip { background: rgba(124, 45, 18, 0.2); border-color: #ea580c; color: #fdba74; }
+		html.dark-mode .tag-auto { background: #064e3b; color: #4ade80; }
+		html.dark-mode .tag-manual { background: #7f1d1d; color: #fca5a5; }
+
 		.path-template-modal-title {
 			font-size: 18px;
 			font-weight: 700;
@@ -5353,6 +5502,15 @@
 			box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
 		}
 
+		html.dark-mode .inline-hint-btn {
+			background: linear-gradient(135deg, #f59e0b 0, #b45309 100%);
+			box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25);
+		}
+
+		html.dark-mode .inline-hint-btn:hover {
+			box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+		}
+
 		html.dark-mode .api-optimize-modal {
 			background: var(--bg-secondary);
 			color: var(--text-primary);
@@ -5361,6 +5519,11 @@
 		html.dark-mode .ech-help-modal {
 			background: var(--bg-secondary);
 			color: var(--text-primary);
+		}
+
+		html.dark-mode .auth-help-modal .auth-help-tip {
+			background: rgba(15, 23, 42, 0.65);
+			border-color: rgba(148, 163, 184, 0.24);
 		}
 
 		html.dark-mode .api-form-row label {
@@ -8393,7 +8556,11 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="subLink">自适应订阅</label>
+					<div class="label-with-hint">
+						<label for="subLink">自适应订阅</label>
+						<button type="button" class="inline-hint-btn" title="查看订阅鉴权 TOKEN 说明"
+							onclick="showAuthTokenHelpModal('token')" aria-label="查看订阅鉴权 TOKEN 说明">!</button>
+					</div>
 					<div class="input-wrapper subscription-link-wrapper">
 						<input type="text" id="subLink" title="自适应订阅" readonly>
 						<div class="btn-container">
@@ -8556,7 +8723,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 					</div>
 
 					<div class="form-group">
-						<label for="nodeUUID">UUID</label>
+						<div class="label-with-hint">
+							<label for="nodeUUID">UUID</label>
+							<button type="button" class="inline-hint-btn" title="查看 UUID 说明"
+								onclick="showAuthTokenHelpModal('uuid')" aria-label="查看 UUID 说明">!</button>
+						</div>
 						<input type="text" id="nodeUUID" title="用于节点验证的UUID 仅可通过 'UUID'环境变量 进行修改" readonly>
 					</div>
 
@@ -14288,6 +14459,70 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 			</div>
 
 			<button type="button" class="btn btn-primary btn-close-modal" onclick="closeECHHelpModal()"
+				style="margin-top: 20px;">关闭</button>
+		</div>
+	</div>
+
+	<!-- 订阅鉴权与 UUID 说明弹窗 -->
+	<div class="modal-overlay" id="authTokenHelpModal" onclick="closeAuthTokenHelpModal(event)">
+		<div class="modal auth-help-modal" onclick="event.stopPropagation()">
+			<button type="button" class="modal-close" onclick="closeAuthTokenHelpModal()">×</button>
+			<div class="api-docs">
+				<!-- TOKEN 说明 -->
+				<div id="authTokenTokenSection">
+					<div class="auth-logic-flow">
+						<div class="logic-node node-vars">ADMIN + KEY</div>
+						<div class="logic-arrow">→</div>
+						<div class="logic-node node-uuid">UUID</div>
+						<div class="logic-arrow">→</div>
+						<div class="logic-node node-token active-token">订阅TOKEN</div>
+					</div>
+
+					<div class="auth-help-card">
+						<span class="card-tag tag-auto">方式 1：动态关联</span>
+						<h4>♻️ 修改项目变量</h4>
+						<p>修改变量 <b>ADMIN</b> 或 <b>KEY</b> 的值，系统将动态生成 UUID 并自动同步生成新的 订阅TOKEN。</p>
+					</div>
+
+					<div class="auth-help-card">
+						<span class="card-tag tag-manual">方式 2：手动固定</span>
+						<h4>📌 直接赋值 UUID</h4>
+						<p>设定变量 <b>UUID</b>。系统将跳过动态生成，直接以此 UUID 生成对应的 订阅TOKEN。</p>
+					</div>
+
+					<div class="auth-help-tip">
+						<strong>⚠️ 重要提示：</strong>一旦手动为变量 <b>UUID</b> 赋值，TOKEN 将进入“固定模式”，不再随 ADMIN/KEY 的变化而自动更新。
+					</div>
+				</div>
+
+				<!-- UUID 说明 -->
+				<div id="authTokenUUIDSection" style="display: none;">
+					<div class="auth-logic-flow">
+						<div class="logic-node node-vars">ADMIN + KEY</div>
+						<div class="logic-arrow">→</div>
+						<div class="logic-node node-uuid active-uuid">UUID</div>
+						<div class="logic-arrow">→</div>
+						<div class="logic-node node-token dimmed">订阅TOKEN</div>
+					</div>
+
+					<div class="auth-help-card">
+						<span class="card-tag tag-auto">方式 1：动态关联</span>
+						<h4>♻️ 修改项目变量</h4>
+						<p>修改变量 <b>ADMIN</b> 或 <b>KEY</b> 的值，系统将会根据算法动态生成新的 UUID。</p>
+					</div>
+
+					<div class="auth-help-card">
+						<span class="card-tag tag-manual">方式 2：手动固定</span>
+						<h4>📌 直接赋值 UUID</h4>
+						<p>设定符合<b>UUIDv4标准</b>的变量 <b>UUID</b>，可将 UUID 强制锁定为您指定的值。</p>
+					</div>
+
+					<div class="auth-help-tip">
+						<strong>⚠️ 重要提示：</strong>一旦手动指定 <b>UUID</b> 变量，其值将不再随 ADMIN/KEY 的改动而发生变化。
+					</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-primary btn-close-modal" onclick="closeAuthTokenHelpModal()"
 				style="margin-top: 20px;">关闭</button>
 		</div>
 	</div>
@@ -21078,6 +21313,25 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 		function closeECHHelpModal(event) {
 			if (event && event.target.id !== 'echHelpModal') return;
 			document.getElementById('echHelpModal').classList.remove('show');
+		}
+
+		function showAuthTokenHelpModal(mode) {
+			const displayMode = mode === 'uuid' ? 'uuid' : 'token';
+			const modal = document.getElementById('authTokenHelpModal');
+			const tokenSection = document.getElementById('authTokenTokenSection');
+			const uuidSection = document.getElementById('authTokenUUIDSection');
+
+			if (!modal || !tokenSection || !uuidSection) return;
+
+			tokenSection.style.display = displayMode === 'token' ? 'block' : 'none';
+			uuidSection.style.display = displayMode === 'uuid' ? 'block' : 'none';
+
+			modal.classList.add('show');
+		}
+
+		function closeAuthTokenHelpModal(event) {
+			if (event && event.target.id !== 'authTokenHelpModal') return;
+			document.getElementById('authTokenHelpModal').classList.remove('show');
 		}
 
 		function switchECHTab(tabIndex) {
