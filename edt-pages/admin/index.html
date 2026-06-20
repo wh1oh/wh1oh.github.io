@@ -23475,7 +23475,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 			const renderTwitterSubtitle = () => {
 				if (!titleElement) return;
 				const prevIndicator = document.getElementById('status-twitter');
-				const prevStatus = prevIndicator ? (prevIndicator.className.match(/status-(\w+)/) || [])[1] : '';
+				const prevStatus = prevIndicator ? (prevIndicator.className.match(/status-(?!indicator)(\w+)/) || [])[1] : '';
 				const getBrandClass = name => {
 					if (name.includes('Google')) return 'tw-subtitle-google';
 					if (name.includes('X.com')) return 'tw-subtitle-twitter';
