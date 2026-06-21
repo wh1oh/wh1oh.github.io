@@ -234,24 +234,27 @@
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
-			width: 20px;
-			height: 20px;
+			width: 16px;
+			height: 16px;
 			padding: 0;
-			border: none;
+			border: 1px solid #cbd5e1;
 			border-radius: 50%;
-			background: linear-gradient(135deg, #f59e0b 0, #d97706 100%);
-			color: #fff;
-			font-size: 13px;
+			background: #f1f5f9;
+			color: #94a3b8;
+			font-size: 11px;
 			font-weight: 700;
 			line-height: 1;
 			cursor: pointer;
-			box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
-			transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+			box-shadow: 0 1px 3px rgba(148, 163, 184, 0.3);
+			transition: transform .2s ease, box-shadow .2s ease, filter .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
 		}
 
 		.inline-hint-btn:hover {
 			transform: translateY(-1px);
-			box-shadow: 0 5px 14px rgba(245, 158, 11, 0.45);
+			background: #e2e8f0;
+			color: #64748b;
+			border-color: #94a3b8;
+			box-shadow: 0 2px 6px rgba(148, 163, 184, 0.4);
 		}
 
 		.inline-hint-btn:active {
@@ -260,7 +263,7 @@
 		}
 
 		.inline-hint-btn:focus-visible {
-			outline: 2px solid #f59e0b;
+			outline: 2px solid #94a3b8;
 			outline-offset: 2px;
 		}
 
@@ -4939,6 +4942,15 @@
 			padding: 24px;
 		}
 
+		.auth-help-title {
+			font-size: 22px;
+			font-weight: 700;
+			color: var(--text-primary);
+			text-align: left;
+			margin: 0 0 16px 0;
+			line-height: 1.4;
+		}
+
 		/* 可视化逻辑链 */
 		.auth-logic-flow {
 			display: flex;
@@ -5503,12 +5515,17 @@
 		}
 
 		html.dark-mode .inline-hint-btn {
-			background: linear-gradient(135deg, #f59e0b 0, #b45309 100%);
-			box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25);
+			background: #334155;
+			border-color: #475569;
+			color: #94a3b8;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 		}
 
 		html.dark-mode .inline-hint-btn:hover {
-			box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+			background: #475569;
+			color: #cbd5e1;
+			border-color: #64748b;
+			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 		}
 
 		html.dark-mode .api-optimize-modal {
@@ -14467,6 +14484,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 	<div class="modal-overlay" id="authTokenHelpModal" onclick="closeAuthTokenHelpModal(event)">
 		<div class="modal auth-help-modal" onclick="event.stopPropagation()">
 			<button type="button" class="modal-close" onclick="closeAuthTokenHelpModal()">×</button>
+			<h2 id="authTokenHelpTitle" class="auth-help-title"></h2>
 			<div class="api-docs">
 				<!-- TOKEN 说明 -->
 				<div id="authTokenTokenSection">
@@ -21320,11 +21338,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 			const modal = document.getElementById('authTokenHelpModal');
 			const tokenSection = document.getElementById('authTokenTokenSection');
 			const uuidSection = document.getElementById('authTokenUUIDSection');
+			const titleEl = document.getElementById('authTokenHelpTitle');
 
 			if (!modal || !tokenSection || !uuidSection) return;
 
 			tokenSection.style.display = displayMode === 'token' ? 'block' : 'none';
 			uuidSection.style.display = displayMode === 'uuid' ? 'block' : 'none';
+
+			if (titleEl) {
+				titleEl.textContent = displayMode === 'uuid'
+					? '🔑 如何修改 UUID？'
+					: '🎫 如何修改订阅 TOKEN？';
+			}
 
 			modal.classList.add('show');
 		}
