@@ -10784,6 +10784,70 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 					gap: 4px;
 				}
 
+				.speed-test-btn.is-speed-batch-target {
+					position: relative;
+					color: var(--blue-dark);
+					text-decoration: none;
+					animation: speedBatchTargetPulse 0.9s ease-in-out infinite alternate;
+				}
+
+				.speed-test-btn.is-speed-batch-target::after {
+					content: "";
+					position: absolute;
+					inset: -4px -6px;
+					border-radius: 10px;
+					border: 1px solid rgba(59, 130, 246, 0.42);
+					background: rgba(59, 130, 246, 0.08);
+					box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.08), 0 8px 18px rgba(59, 130, 246, 0.12);
+					pointer-events: none;
+				}
+
+				.speed-test-btn.is-speed-batch-target > * {
+					position: relative;
+					z-index: 1;
+				}
+
+				.speed-test-btn.is-speed-pending {
+					color: var(--blue-dark);
+					cursor: default;
+					text-decoration: none;
+					animation: speedBatchPendingPulse 1.1s ease-in-out infinite alternate;
+				}
+
+				.speed-test-btn.is-speed-pending .icon {
+					animation: speedBatchPendingIcon 1.1s ease-in-out infinite;
+				}
+
+				@keyframes speedBatchTargetPulse {
+					from {
+						transform: translateY(0) scale(1);
+					}
+					to {
+						transform: translateY(-1px) scale(1.03);
+					}
+				}
+
+				@keyframes speedBatchPendingPulse {
+					from {
+						opacity: 0.82;
+					}
+					to {
+						opacity: 1;
+					}
+				}
+
+				@keyframes speedBatchPendingIcon {
+					from {
+						transform: translateY(0);
+					}
+					50% {
+						transform: translateY(-1px);
+					}
+					to {
+						transform: translateY(0);
+					}
+				}
+
 				.speed-test-btn .icon {
 					width: 14px;
 					height: 14px;
@@ -11532,7 +11596,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 													<span class="sort-mark" data-sort-mark="type"></span></button></th>
 											<th class="filterable-header" style="width: 13%"><button class="sort-header"
 													type="button" data-sort="country"><span class="filter-header-label"
-														role="button" tabindex="0" data-filter-key="country">国家/地区</span>
+														role="button" tabindex="0" data-filter-key="country">国家地区</span>
 													<span class="sort-mark" data-sort-mark="country"></span></button></th>
 											<th class="filterable-header" style="width: 10%"><button class="sort-header"
 													type="button" data-sort="colo"><span class="filter-header-label"
@@ -11620,20 +11684,23 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 				const TLS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
 				const DETECT_ENDPOINTS = {
 					ipv4: [
-						"https://671F0401.nip.cmliussss.hidns.vip",
-						"https://6CA2C001.nip.cmliussss.hidns.vip",
-						"https://BC726001.nip.cmliussss.hidns.vip",
-						"https://68100001.nip.cmliussss.hidns.vip",
-						"https://68180001.nip.cmliussss.hidns.vip",
-						"https://AC400001.nip.cmliussss.hidns.vip"
+						"https://671F04**.bestcf.cmliussss.hidns.vip",
+						"https://6CA2C0**.bestcf.cmliussss.hidns.vip",
+						"https://BC7260**.bestcf.cmliussss.hidns.vip",
+						"https://681000**.bestcf.cmliussss.hidns.vip",
+						"https://681800**.bestcf.cmliussss.hidns.vip",
+						"https://AC4000**.bestcf.cmliussss.hidns.vip"
 					],
 					ipv6: [
-						"https://2606-4700--1.nip.cmliussss.hidns.vip",
-						"https://2606-4700--1000-1.nip.cmliussss.hidns.vip",
-						"https://2606-4700--2000-1.nip.cmliussss.hidns.vip",
-						"https://2606-4700--3000-1.nip.cmliussss.hidns.vip"
+						"https://2606-4700--**.bestcf.cmliussss.hidns.vip",
+						"https://2606-4700--1000-**.bestcf.cmliussss.hidns.vip",
+						"https://2606-4700--2000-**.bestcf.cmliussss.hidns.vip",
+						"https://2606-4700--3000-**.bestcf.cmliussss.hidns.vip"
 					]
 				};
+				function expandWildcardEndpoints(endpoints) {
+					return endpoints.map(ep => ep.replace(/\*\*/g, () => Math.floor(Math.random() * 255 + 1).toString(16).padStart(2, '0')));
+				}
 				const IP_LIBRARIES = [
 					{ label: "个人列表v4", family: "ipv4", url: "https://raw.githubusercontent.com/legalishomo/cc/refs/heads/main/US_ip.txt" },
                     { label: "CF官方列表v4", family: "ipv4", url: "https://cf.090227.xyz/ips-v4" },
@@ -11672,6 +11739,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 					nextResultId: 1,
 					sort: { key: "latency", dir: "asc" },
 					resultSelectionDrag: null,
+					speedBatchDrag: null,
 					suppressResultClick: false,
 					saveEasterHold: null,
 					suppressNextSaveClick: false,
@@ -11805,6 +11873,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 						if (!row) return;
 						toggleResultSelected(row.dataset.resultId);
 					});
+					els.resultBody.addEventListener("mousedown", startSpeedTestDrag);
+					els.resultBody.addEventListener("mouseover", continueSpeedTestDrag);
+					document.addEventListener("mouseup", finishSpeedTestDrag);
+					window.addEventListener("blur", finishSpeedTestDrag);
 					els.resultBody.addEventListener("mousedown", startResultSelectionDrag);
 					els.resultBody.addEventListener("mouseover", continueResultSelectionDrag);
 					document.addEventListener("mouseup", finishResultSelectionDrag);
@@ -12060,7 +12132,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 				}
 
 				async function detectStack(family) {
-					const { endpoint, data } = await fetchJsonFromFastestEndpoint(DETECT_ENDPOINTS[family], "ip.json", 6500);
+					const { endpoint, data } = await fetchJsonFromFastestEndpoint(expandWildcardEndpoints(DETECT_ENDPOINTS[family]), "ip.json", 6500);
 					const allowed = data.country === "CN";
 					return {
 						status: "done",
@@ -12513,6 +12585,133 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 						result.speedRemaining = null;
 						renderResults();
 					}
+				}
+
+				async function startSpeedTestsByIndexes(indexes) {
+					const uniqueIndexes = Array.from(new Set(indexes.map((value) => Number(value)).filter((value) => Number.isInteger(value) && value >= 0)));
+					const targets = uniqueIndexes
+						.map((index) => ({ index, result: state.results[index] }))
+						.filter(({ result }) => result && result.speedState !== "testing");
+					if (!targets.length) return;
+
+					const settings = readSettings();
+					const concurrency = Math.min(4, Math.max(1, Math.ceil(settings.threads / 8)));
+					const run = {
+						stopped: false,
+						controllers: new Set(),
+						completed: 0,
+						total: targets.length,
+						batchTargets: new Set(targets.map(({ index }) => index))
+					};
+					state.speedRun = run;
+					if (els.speedAllBtn) {
+						els.speedAllBtn.classList.add("danger");
+						els.speedAllBtn.innerHTML = `${svgStopIcon()}停止测速`;
+					}
+					if (els.speedStatus) els.speedStatus.textContent = `正在测速 0 / ${run.total}`;
+					updateActionAvailability();
+
+					targets.forEach(({ result }) => {
+						result.speedState = "pending";
+						result.speedMbps = null;
+					});
+					renderResults();
+
+					await runPool(targets, concurrency, async ({ result }) => {
+						if (run.stopped) return;
+						result.speedState = "testing";
+						result.speedRemaining = 10;
+						renderResults();
+						try {
+							const speed = await testDownloadSpeed(result.parsed, run, ({ remaining, speedMbps }) => {
+								result.speedRemaining = remaining;
+								result.speedMbps = speedMbps;
+							});
+							if (!run.stopped) {
+								result.speedState = "done";
+								result.speedMbps = speed;
+							}
+						} catch (error) {
+							result.speedState = run.stopped ? "stopped" : "failed";
+						} finally {
+							result.speedRemaining = null;
+							run.completed += 1;
+							if (els.speedStatus) els.speedStatus.textContent = `正在测速 ${run.completed} / ${run.total}`;
+							renderResults();
+						}
+					}, run);
+
+					if (run.stopped) {
+						targets.forEach(({ result }) => {
+							if (result.speedState === "pending" || result.speedState === "testing") result.speedState = "stopped";
+						});
+						if (els.speedStatus) els.speedStatus.textContent = "批量测速已停止";
+					} else {
+						if (els.speedStatus) els.speedStatus.textContent = "批量测速完成";
+					}
+
+					state.speedRun = null;
+					if (els.speedAllBtn) {
+						els.speedAllBtn.classList.remove("danger");
+						els.speedAllBtn.innerHTML = `${svgBoltIcon()}全部测速`;
+					}
+					renderResults();
+					updateActionAvailability();
+				}
+
+				function startSpeedTestDrag(event) {
+					if (event.button !== 0) return;
+					if (state.speedRun) return;
+					const button = event.target.closest("[data-speed-index]");
+					if (!button || !els.resultBody.contains(button)) return;
+					const index = Number(button.dataset.speedIndex);
+					if (!Number.isInteger(index)) return;
+
+					event.preventDefault();
+					state.speedBatchDrag = {
+						active: true,
+						indexes: [index],
+						seen: new Set([index]),
+						moved: false
+					};
+					renderResults();
+				}
+
+				function continueSpeedTestDrag(event) {
+					const drag = state.speedBatchDrag;
+					if (!drag || !drag.active) return;
+					if ((event.buttons & 1) !== 1) {
+						finishSpeedTestDrag();
+						return;
+					}
+
+					const button = event.target.closest("[data-speed-index]");
+					if (!button || !els.resultBody.contains(button)) return;
+					const index = Number(button.dataset.speedIndex);
+					if (!Number.isInteger(index) || drag.seen.has(index)) return;
+
+					drag.seen.add(index);
+					drag.indexes.push(index);
+					drag.moved = true;
+					renderResults();
+				}
+
+				function finishSpeedTestDrag() {
+					const drag = state.speedBatchDrag;
+					if (!drag || !drag.active) return;
+					drag.active = false;
+					state.speedBatchDrag = null;
+					state.suppressResultClick = true;
+					window.setTimeout(() => {
+						state.suppressResultClick = false;
+					}, 0);
+
+					if (drag.indexes.length === 1 && !drag.moved) {
+						startSingleSpeedTest(drag.indexes[0]);
+						return;
+					}
+
+					void startSpeedTestsByIndexes(drag.indexes);
 				}
 
 				async function startAllSpeedTests() {
@@ -13384,13 +13583,21 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 				}
 
 				function renderSpeedCell(item, index) {
+					const isBatchTarget = Boolean(state.speedBatchDrag && state.speedBatchDrag.active && state.speedBatchDrag.seen.has(index));
 					if (item.speedState === "testing") {
 						return `<span class="muted">${formatSpeedMbps(item.speedMbps)}Mbps</span>`;
 					}
-					if (item.speedState === "done") return `<button class="link-btn" type="button" data-speed-index="${index}"><strong>${formatSpeedMbps(item.speedMbps)}Mbps</strong></button>`;
-					if (item.speedState === "failed") return `<button class="tag bad speed-retry-tag" type="button" data-speed-index="${index}" title="点击重试测速" aria-label="测速失败，点击重试">失败</button>`;
+					if (item.speedState === "pending") {
+						const pendingTargets = state.speedRun && state.speedRun.batchTargets;
+						if (!pendingTargets || !pendingTargets.has(index)) {
+							return `<button class="link-btn speed-test-btn${isBatchTarget ? " is-speed-batch-target" : ""}" type="button" data-speed-index="${index}" title="点击开始测速" aria-label="点击开始测速">${svgRunIcon()}<span>测速</span></button>`;
+						}
+						return `<button class="link-btn speed-test-btn is-speed-pending" type="button" data-speed-index="${index}" disabled aria-disabled="true" title="等待测速中" aria-label="等待测速中">${svgRunIcon()}<span>测速中</span></button>`;
+					}
+					if (item.speedState === "done") return `<button class="link-btn speed-test-btn${isBatchTarget ? " is-speed-batch-target" : ""}" type="button" data-speed-index="${index}"><strong>${formatSpeedMbps(item.speedMbps)}Mbps</strong></button>`;
+					if (item.speedState === "failed") return `<button class="tag bad speed-retry-tag speed-test-btn${isBatchTarget ? " is-speed-batch-target" : ""}" type="button" data-speed-index="${index}" title="点击重试测速" aria-label="测速失败，点击重试">失败</button>`;
 					if (item.speedState === "stopped") return '<span class="muted">测速已停止</span>';
-					return `<button class="link-btn speed-test-btn" type="button" data-speed-index="${index}" title="点击开始测速" aria-label="点击开始测速">${svgRunIcon()}<span>测速</span></button>`;
+					return `<button class="link-btn speed-test-btn${isBatchTarget ? " is-speed-batch-target" : ""}" type="button" data-speed-index="${index}" title="点击开始测速" aria-label="点击开始测速">${svgRunIcon()}<span>测速</span></button>`;
 				}
 
 				function formatSpeedMbps(speedMbps) {
@@ -13593,7 +13800,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 						? ipv4ToHexLabel(parsed.ip)
 						: parsed.ip.toLowerCase().replace(/:/g, "-");
 					const search = new URLSearchParams({ _t: String(Date.now()), ...params });
-					return `https://${label}.nip.cmliussss.hidns.vip:${parsed.port}/${path}?${search.toString()}`;
+					return `https://${label}.bestcf.cmliussss.hidns.vip:${parsed.port}/${path}?${search.toString()}`;
 				}
 
 				function ipv4ToHexLabel(ip) {
