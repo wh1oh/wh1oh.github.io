@@ -1429,6 +1429,124 @@
 			opacity: 1 !important;
 		}
 
+		.auth-help-modal {
+			max-width: min(600px, calc(100vw - 24px));
+			width: min(95vw, 600px);
+			text-align: left;
+		}
+
+		#authTokenHelpModal[data-mode="customIPs"] .auth-help-modal {
+			max-width: calc(100vw - 24px);
+			width: min(calc(100vw - 24px), 1280px);
+		}
+
+		.auth-help-modal .api-docs {
+			display: grid;
+			gap: 18px;
+		}
+
+		.auth-help-modal .auth-help-summary {
+			background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+			border: 1px solid #dbeafe;
+			border-radius: 14px;
+			padding: 16px 18px;
+			color: #334155;
+			line-height: 1.8;
+		}
+
+		.auth-help-modal .auth-help-summary.auth-help-summary-warning {
+			background: #fffbeb;
+			border-color: #fbbf24;
+			color: #92400e;
+			padding: 12px 14px;
+			font-size: 12.5px;
+			line-height: 1.7;
+		}
+
+		.auth-help-modal .auth-help-summary strong {
+			color: #0f172a;
+		}
+
+		.auth-help-modal .auth-help-section-title {
+			font-size: 16px;
+			font-weight: 700;
+			color: var(--text-primary);
+			margin: 0 0 10px;
+		}
+
+		.auth-help-modal .auth-guide-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 14px;
+		}
+
+		@media (max-width: 768px) {
+			.auth-help-modal {
+				max-width: calc(100vw - 16px);
+				width: calc(100vw - 16px);
+				padding: 22px 16px;
+			}
+
+			#authTokenHelpModal[data-mode="customIPs"] .auth-help-modal {
+				max-width: calc(100vw - 16px);
+				width: calc(100vw - 16px);
+			}
+
+			.auth-help-modal .auth-guide-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		.auth-help-modal .auth-guide-card {
+			background: #fff;
+			border: 1px solid #e2e8f0;
+			border-radius: 14px;
+			padding: 16px 18px;
+			box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+		}
+
+		.auth-help-modal .auth-guide-card h4 {
+			margin: 0 0 10px;
+			font-size: 15px;
+			font-weight: 700;
+			color: #0f172a;
+		}
+
+		.auth-help-modal .auth-guide-card p {
+			margin: 0;
+			font-size: 13.5px;
+			line-height: 1.7;
+			color: #475569;
+		}
+
+		.auth-help-modal .auth-example-list {
+			display: grid;
+			gap: 12px;
+		}
+
+		.auth-help-modal .auth-example-item {
+			background: #f8fafc;
+			border: 1px solid #e2e8f0;
+			border-radius: 12px;
+			padding: 14px 16px;
+		}
+
+		.auth-help-modal .auth-example-item h4 {
+			margin: 0 0 8px;
+			font-size: 14px;
+			font-weight: 700;
+			color: #1e293b;
+		}
+
+		.auth-help-modal .auth-example-item pre {
+			margin: 0;
+			white-space: pre-wrap;
+			word-break: break-word;
+			font-family: 'Fira Code', 'Consolas', monospace;
+			font-size: 12.5px;
+			line-height: 1.7;
+		}
+
 		#qrcodeModal .modal {
 			background: #808080;
 		}
@@ -4933,13 +5051,18 @@
 			overflow-y: auto;
 		}
 
-		.auth-help-modal {
-			max-width: 600px;
-			width: 95vw;
-			max-height: 85vh;
+		#authTokenHelpModal .auth-help-modal {
+			max-width: min(680px, calc(100vw - 24px));
+			width: min(95vw, 680px);
+			max-height: 90vh;
 			overflow-y: auto;
 			text-align: left;
 			padding: 24px;
+		}
+
+		#authTokenHelpModal[data-mode="customIPs"] .auth-help-modal {
+			max-width: calc(100vw - 24px);
+			width: min(calc(100vw - 24px), 1280px);
 		}
 
 		.auth-help-title {
@@ -5043,6 +5166,15 @@
 		html.dark-mode .auth-help-card h4 { color: #f1f5f9; }
 		html.dark-mode .auth-help-card p { color: #94a3b8; }
 		html.dark-mode .auth-help-tip { background: rgba(124, 45, 18, 0.2); border-color: #ea580c; color: #fdba74; }
+		html.dark-mode .auth-help-modal .auth-help-summary { background: rgba(30, 41, 59, 0.92); border-color: #334155; color: #cbd5e1; }
+		html.dark-mode .auth-help-modal .auth-help-summary.auth-help-summary-warning { background: rgba(120, 53, 15, 0.22); border-color: #f59e0b; color: #fdba74; }
+		html.dark-mode .auth-help-modal .auth-help-summary strong { color: #f8fafc; }
+		html.dark-mode .auth-help-modal .auth-guide-card { background: #1e293b; border-color: #334155; box-shadow: none; }
+		html.dark-mode .auth-help-modal .auth-guide-card h4 { color: #f1f5f9; }
+		html.dark-mode .auth-help-modal .auth-guide-card p { color: #cbd5e1; }
+		html.dark-mode .auth-help-modal .auth-example-item { background: #0f172a; border-color: #334155; }
+		html.dark-mode .auth-help-modal .auth-example-item h4 { color: #e2e8f0; }
+		html.dark-mode .auth-help-modal .auth-example-item pre { color: #cbd5e1; }
 		html.dark-mode .tag-auto { background: #064e3b; color: #4ade80; }
 		html.dark-mode .tag-manual { background: #7f1d1d; color: #fca5a5; }
 
@@ -8663,7 +8795,11 @@
 					</div>
 
 					<div id="customIPSection" class="form-group hidden-section">
-						<label for="customIPs">自定义优选地址</label>
+						<div class="label-with-hint">
+							<label for="customIPs">自定义优选</label>
+							<button type="button" class="inline-hint-btn" title="查看自定义优选 填写说明"
+								onclick="showAuthTokenHelpModal('customIPs')" aria-label="查看自定义优选 填写说明">!</button>
+						</div>
 						<div class="line-editor line-editor-wrap" id="subCustomEditor">
 							<div class="gutter" aria-hidden="true">
 								<pre>1</pre>
@@ -8673,24 +8809,9 @@
 									<div class="shade-line"></div>
 								</div>
 								<textarea id="customIPs" title="自定义优选地址" wrap="soft"
-									placeholder="注意：
-每行一个地址，如：地址:端口#备注
-IPv6地址需要用中括号括起来，如：[2606:4700::]:2053
-端口不写，默认为 443 端口，如：www.visa.cn#优选域名
-
-示例：
-www.visa.cn#优选域名
-127.0.0.1:1234#CFnat
-[2606:4700::]:2053#IPv6
-
-API示例：
-https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesapi.txt
-
-优选订阅生成器示例：
-sub://sub.cmliussss.net#CM优选订阅
-
-其他节点示例：
-vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tls&type=ws&host=edt-pages.github.io&path=%2F#edgetunnel"
+									placeholder="www.visa.cn#优选域名
+104.24.0.232:8443#优选IPv4
+[2606:4700::]:2053#优选IPv6"
 									onchange="markModified('sub')"></textarea>
 							</div>
 						</div>
@@ -14744,6 +14865,39 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
 					<div class="auth-help-tip">
 						<strong>⚠️ 重要提示：</strong>一旦手动指定 <b>UUID</b> 变量，其值将不再随 ADMIN/KEY 的改动而发生变化。
+					</div>
+				</div>
+
+				<!-- 自定义优选 填写说明 -->
+				<div id="authTokenCustomIPsSection" style="display: none;">
+					<div class="auth-help-summary auth-help-summary-warning">
+						<strong>提示：</strong>一行写一条，地址后可加 <b>#备注</b>。优选IPv6 写成 <b>[2606:4700::]:2053</b>，优选域名/IP 端口不写默认 <b>443</b>。
+					</div>
+
+					<div class="auth-help-section-title" style="margin-top: 20px;">📚 示例</div>
+					<div class="auth-example-list">
+						<div class="auth-example-item">
+							<h4>优选域名 / IP</h4>
+							<pre>www.visa.cn#优选域名
+104.24.0.232:8443#优选IPv4
+[2606:4700::]:2053#优选IPv6</pre>
+						</div>
+						<div class="auth-example-item">
+							<h4>优选域名 / IP API</h4>
+							<pre>https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesapi.txt#优选IP_API</pre>
+						</div>
+						<div class="auth-example-item">
+							<h4>优选订阅生成器</h4>
+							<pre>sub://sub.cmliussss.net#CM优选订阅</pre>
+						</div>
+						<div class="auth-example-item">
+							<h4>机场订阅</h4>
+							<pre>https://69yun69.net/auth/register?code=RSuNkt#69云机场</pre>
+						</div>
+						<div class="auth-example-item">
+							<h4>现成节点</h4>
+							<pre>vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tls&type=ws&host=edt-pages.github.io&path=%2F#edgetunnel</pre>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -21431,21 +21585,29 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 		}
 
 		function showAuthTokenHelpModal(mode) {
-			const displayMode = mode === 'uuid' ? 'uuid' : 'token';
+			const displayMode = mode === 'uuid' ? 'uuid' : mode === 'customIPs' ? 'customIPs' : 'token';
 			const modal = document.getElementById('authTokenHelpModal');
 			const tokenSection = document.getElementById('authTokenTokenSection');
 			const uuidSection = document.getElementById('authTokenUUIDSection');
+			const customIPsSection = document.getElementById('authTokenCustomIPsSection');
 			const titleEl = document.getElementById('authTokenHelpTitle');
 
-			if (!modal || !tokenSection || !uuidSection) return;
+			if (!modal || !tokenSection || !uuidSection || !customIPsSection) return;
+
+			modal.dataset.mode = displayMode;
 
 			tokenSection.style.display = displayMode === 'token' ? 'block' : 'none';
 			uuidSection.style.display = displayMode === 'uuid' ? 'block' : 'none';
+			customIPsSection.style.display = displayMode === 'customIPs' ? 'block' : 'none';
 
 			if (titleEl) {
-				titleEl.textContent = displayMode === 'uuid'
-					? '🔑 如何修改 UUID？'
-					: '🎫 如何修改订阅 TOKEN？';
+				if (displayMode === 'uuid') {
+					titleEl.textContent = '🔑 如何修改 UUID？';
+				} else if (displayMode === 'customIPs') {
+					titleEl.textContent = '📍 自定义优选 填写说明';
+				} else {
+					titleEl.textContent = '🎫 如何修改订阅 TOKEN？';
+				}
 			}
 
 			modal.classList.add('show');
@@ -21453,7 +21615,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@edt-pages.github.io:443?security=tl
 
 		function closeAuthTokenHelpModal(event) {
 			if (event && event.target.id !== 'authTokenHelpModal') return;
-			document.getElementById('authTokenHelpModal').classList.remove('show');
+			const modal = document.getElementById('authTokenHelpModal');
+			if (!modal) return;
+			delete modal.dataset.mode;
+			modal.classList.remove('show');
 		}
 
 		function switchECHTab(tabIndex) {
