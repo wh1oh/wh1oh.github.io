@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -12136,7 +12136,7 @@
 						updateServiceStatus();
 
 						const allowed = availableFamilies().length > 0;
-						//if (!allowed) showNetworkWarning();
+						if (!allowed) showNetworkWarning();
 						return allowed;
 					} finally {
 						state.networkChecking = false;
@@ -12403,7 +12403,17 @@
 
 				function updateLibraryOptions() {
 					const selectedKey = preferredLibraryKey();
-					const options = IP_LIBRARIES;
+					const families = new Set(availableFamilies());
+					const options = IP_LIBRARIES.filter((item) => families.has(item.family));
+					els.librarySelect.innerHTML = "";
+					if (!options.length) {
+						const option = document.createElement("option");
+						option.textContent = "无可用IP库";
+						option.value = "";
+						els.librarySelect.appendChild(option);
+						els.librarySelect.disabled = true;
+						els.importBtn.disabled = true;
+						return;
 					}
 
 					options.forEach((item) => {
@@ -12430,12 +12440,14 @@
 				}
 
 				function updateActionAvailability() {
+					const hasService = availableFamilies().length > 0;
 					const latencyActive = Boolean(state.latencyRun);
 					const speedActive = Boolean(state.speedRun);
-					els.latencyBtn.disabled = state.networkChecking || speedActive;
+					els.latencyBtn.disabled = state.networkChecking || speedActive || (!hasService && !latencyActive);
 					if (els.speedAllBtn) {
 						els.speedAllBtn.disabled = state.networkChecking ||
 							latencyActive ||
+							(!hasService && !speedActive) ||
 							(state.results.length === 0 && !speedActive);
 					}
 				}
