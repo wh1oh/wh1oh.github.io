@@ -11911,6 +11911,8 @@
 				document.addEventListener("DOMContentLoaded", () => {
 					bindEvents();
 					updateEditorMeta();
+					state.ipv4 = true;   // 🔥 强制解锁
+	    state.ipv6 = true;   // 🔥 强制解锁
 					detectNetwork();
 					if ("ResizeObserver" in window) {
 						state.editorResizeObserver = new ResizeObserver(updateEditorMeta);
