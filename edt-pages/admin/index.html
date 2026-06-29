@@ -11911,8 +11911,6 @@
 				document.addEventListener("DOMContentLoaded", () => {
 					bindEvents();
 					updateEditorMeta();
-					state.ipv4 = true;   // 🔥 强制解锁
-	    state.ipv6 = true;   // 🔥 强制解锁
 					detectNetwork();
 					if ("ResizeObserver" in window) {
 						state.editorResizeObserver = new ResizeObserver(updateEditorMeta);
@@ -12072,10 +12070,9 @@
 					if (statusEl) statusEl.textContent = "正在检测CN网络";
 					const allowed = await refreshCnNetwork({ resetResults: false, stopRuns: false });
 					if (!allowed) {
-						//if (button && idleHtml) button.innerHTML = idleHtml;
-						//if (statusEl) statusEl.textContent = "检测未通过，请关闭代理后重试";
-						//return false;
-						return true
+						if (button && idleHtml) button.innerHTML = idleHtml;
+						if (statusEl) statusEl.textContent = "检测未通过，请关闭代理后重试";
+						return false;
 					}
 					if (statusEl) statusEl.textContent = "CN网络检测通过";
 					return true;
@@ -12140,8 +12137,7 @@
 
 						const allowed = availableFamilies().length > 0;
 						//if (!allowed) showNetworkWarning();
-						return true;
-						//return allowed;
+						return allowed;
 					} finally {
 						state.networkChecking = false;
 						updateActionAvailability();
