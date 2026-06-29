@@ -12403,17 +12403,7 @@
 
 				function updateLibraryOptions() {
 					const selectedKey = preferredLibraryKey();
-					const families = new Set(availableFamilies());
-					const options = IP_LIBRARIES.filter((item) => families.has(item.family));
-					els.librarySelect.innerHTML = "";
-					if (!options.length) {
-						const option = document.createElement("option");
-						option.textContent = "无可用IP库";
-						option.value = "";
-						els.librarySelect.appendChild(option);
-						els.librarySelect.disabled = true;
-						els.importBtn.disabled = true;
-						return;
+					const options = IP_LIBRARIES;
 					}
 
 					options.forEach((item) => {
@@ -12440,14 +12430,12 @@
 				}
 
 				function updateActionAvailability() {
-					const hasService = availableFamilies().length > 0;
 					const latencyActive = Boolean(state.latencyRun);
 					const speedActive = Boolean(state.speedRun);
-					els.latencyBtn.disabled = state.networkChecking || speedActive || (!hasService && !latencyActive);
+					els.latencyBtn.disabled = state.networkChecking || speedActive;
 					if (els.speedAllBtn) {
 						els.speedAllBtn.disabled = state.networkChecking ||
 							latencyActive ||
-							(!hasService && !speedActive) ||
 							(state.results.length === 0 && !speedActive);
 					}
 				}
