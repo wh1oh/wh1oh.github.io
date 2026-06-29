@@ -12137,6 +12137,7 @@
 
 						const allowed = availableFamilies().length > 0;
 						//if (!allowed) showNetworkWarning();
+						if (!allowed) return;
 						return allowed;
 					} finally {
 						state.networkChecking = false;
