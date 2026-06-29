@@ -12070,9 +12070,10 @@
 					if (statusEl) statusEl.textContent = "正在检测CN网络";
 					const allowed = await refreshCnNetwork({ resetResults: false, stopRuns: false });
 					if (!allowed) {
-						if (button && idleHtml) button.innerHTML = idleHtml;
-						if (statusEl) statusEl.textContent = "检测未通过，请关闭代理后重试";
-						return false;
+						//if (button && idleHtml) button.innerHTML = idleHtml;
+						//if (statusEl) statusEl.textContent = "检测未通过，请关闭代理后重试";
+						//return false;
+						return true
 					}
 					if (statusEl) statusEl.textContent = "CN网络检测通过";
 					return true;
@@ -12137,8 +12138,8 @@
 
 						const allowed = availableFamilies().length > 0;
 						//if (!allowed) showNetworkWarning();
-						if (!allowed) return;
-						return allowed;
+						return true;
+						//return allowed;
 					} finally {
 						state.networkChecking = false;
 						updateActionAvailability();
