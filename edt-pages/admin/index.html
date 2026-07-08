@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -13753,6 +13753,20 @@
 						}
 						const normalized = normalizeAddress(line, preferredPort);
 						if (normalized) fixed.push(normalized);
+					}
+
+					// 随机打乱固定IP、CIDR和范围列表，以确保每次选取的候选IP是随机且不同的
+					for (let i = fixed.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[fixed[i], fixed[j]] = [fixed[j], fixed[i]];
+					}
+					for (let i = cidrs.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[cidrs[i], cidrs[j]] = [cidrs[j], cidrs[i]];
+					}
+					for (let i = ranges.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[ranges[i], ranges[j]] = [ranges[j], ranges[i]];
 					}
 
 					const candidates = [];
