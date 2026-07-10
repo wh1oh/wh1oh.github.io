@@ -1,5 +1,6 @@
 # VS Code 设置
 .vscode/
+.workbuddy/
 demo/
 
 # 操作系统
