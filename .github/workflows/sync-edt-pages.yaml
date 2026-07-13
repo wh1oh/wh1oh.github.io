@@ -67,8 +67,8 @@ jobs:
         run: |
           FILE="edt-pages/admin/index.html"
           #perl -i -0pe 's/(<input[^>]*id="portInput"[^>]*value=")0"/${1}443"/' "$FILE"
-          #perl -i -0pe 's/(\{ label: "CF官方列表v4")/{ label: "个人列表SGv4", family: "ipv4", url: "https:\/\/raw.githubusercontent.com\/legalishomo\/cc\/refs\/heads\/main\/SG_ip.txt" },\n                    $1/' "$FILE"
-          perl -i -0pe 's/(\{ label: "CF官方列表v4")/{ label: "个人列表USv4", family: "ipv4", url: "https:\/\/raw.githubusercontent.com\/legalishomo\/cc\/refs\/heads\/main\/US_ip.txt" },\n                    $1/' "$FILE"
+          perl -i -0pe 's/(\{ label: "CF官方列表v4")/{ label: "SG个人列表v4", family: "ipv4", url: "https:\/\/raw.githubusercontent.com\/legalishomo\/cc\/refs\/heads\/main\/SG_ip.txt" },\n                    $1/' "$FILE"
+          perl -i -0pe 's/(\{ label: "CF官方列表v4")/{ label: "US个人列表v4", family: "ipv4", url: "https:\/\/raw.githubusercontent.com\/legalishomo\/cc\/refs\/heads\/main\/US_ip.txt" },\n                    $1/' "$FILE"
           perl -i -0pe 's/(id="limitInput"[^>]*?)value="512"/\1value="4096"/' "$FILE"
 
       - name: Commit and push changes
