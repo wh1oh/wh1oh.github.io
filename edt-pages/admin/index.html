@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -11783,7 +11783,7 @@
 											<div class="field">
 												<label for="limitInput">待测IP数</label>
 												<input class="input" id="limitInput" type="number" min="1" max="4096"
-													step="1" value="512">
+													step="1" value="4096">
 											</div>
 											<div class="field">
 												<label for="timeoutInput">超时时间 ms</label>
@@ -11980,9 +11980,8 @@
 					return endpoints.map(ep => ep.replace(/\*\*/g, () => Math.floor(Math.random() * 255 + 1).toString(16).padStart(2, '0')));
 				}
 				const IP_LIBRARIES = [
-					{ label: "SG个人列表v4", family: "ipv4", url: "https://raw.githubusercontent.com/legalishomo/cc/refs/heads/main/SG_ip.txt" },
-					{ label: "US个人列表v4", family: "ipv4", url: "https://raw.githubusercontent.com/legalishomo/cc/refs/heads/main/US_ip.txt" },
-					{ label: "CF官方列表v4", family: "ipv4", url: "https://cf.090227.xyz/ips-v4" },
+					{ label: "个人列表USv4", family: "ipv4", url: "https://raw.githubusercontent.com/legalishomo/cc/refs/heads/main/US_ip.txt" },
+                    { label: "CF官方列表v4", family: "ipv4", url: "https://cf.090227.xyz/ips-v4" },
 					{ label: "CF官方列表v6", family: "ipv6", url: "https://cf.090227.xyz/ips-v6" },
 					{ label: "CM优选列表v4", family: "ipv4", url: "https://raw.githubusercontent.com/cmliu/cmliu/main/CF-CIDR.txt" },
 					{ label: "AS13335列表v4", family: "ipv4", url: "https://raw.githubusercontent.com/ipverse/asn-ip/master/as/13335/ipv4-aggregated.txt" },
