@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -13014,10 +13014,23 @@
 						if (state.latencyRun) stopLatencyRun();
 						if (state.speedRun) stopSpeedRun();
 					}
-
+/*修改1
 					state.ipv4 = null;
+*/
+					state.ipv4 = 112.224.192.5;
 					state.ipv6 = null;
+					/*修改2
 					state.network = { ipv4: null, ipv6: null };
+*/
+					state.network = { 
+						ipv4: { 
+							status: "done",
+							allowed: true,
+							ipType: "ipv4",
+							ip: "112.224.192.5"
+						},
+						ipv6: null
+					};
 					state.locations = [];
 					state.locationsByIata = new Map();
 					if (resetResults) {
