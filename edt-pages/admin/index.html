@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -13036,10 +13036,12 @@
 
 					try {
 						const checks = await Promise.allSettled([
+							/*修改1
 							detectStack("ipv4"),
 							detectStack("ipv6")
+						*/
 						]);
-
+/*修改2
 						checks.forEach((result, index) => {
 							const family = index === 0 ? "ipv4" : "ipv6";
 							if (result.status === "fulfilled") {
@@ -13055,16 +13057,21 @@
 								};
 							}
 						});
-
+*/
 						renderNetworkCard("ipv4", state.network.ipv4);
 						renderNetworkCard("ipv6", state.network.ipv6);
 						updateLibraryOptions();
 						await loadLocations();
 						updateServiceStatus();
-
+						
+						/*添加1*/
+						return true;
+						
+/*修改3
 						const allowed = availableFamilies().length > 0;
 						if (!allowed) showNetworkWarning();
 						return allowed;
+*/
 					} finally {
 						state.networkChecking = false;
 						updateActionAvailability();
@@ -13287,10 +13294,14 @@
 				}
 
 				function availableFamilies() {
+					/*添加*/
+					return ["ipv4", "ipv6"];
+					/*修改
 					const list = [];
 					if (state.ipv4) list.push("ipv4");
 					if (state.ipv6) list.push("ipv6");
 					return list;
+*/
 				}
 
 				function librarySelectionKey(source) {
