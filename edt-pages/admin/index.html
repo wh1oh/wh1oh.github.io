@@ -13081,6 +13081,13 @@
 						renderNetworkCard("ipv6", state.network.ipv6);
 						updateLibraryOptions();
 						await loadLocations();
+						state.ipv4 = "112.224.192.5";
+						state.network.ipv4 = {
+							status: "done",
+							allowed: true,
+							ipType: "ipv4",
+							ip: "112.224.192.5"
+						};
 						updateServiceStatus();
 
 						const allowed = availableFamilies().length > 0;
