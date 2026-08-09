@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -12720,10 +12720,18 @@
 				const TLS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
 				const DETECT_ENDPOINTS = {
 					ipv4: [
-						"https://ipv4.090227.xyz"
+						"https://671F04**.bestcf.cmliussss.hidns.vip",
+						"https://6CA2C0**.bestcf.cmliussss.hidns.vip",
+						"https://BC7260**.bestcf.cmliussss.hidns.vip",
+						"https://681000**.bestcf.cmliussss.hidns.vip",
+						"https://681800**.bestcf.cmliussss.hidns.vip",
+						"https://AC4000**.bestcf.cmliussss.hidns.vip"
 					],
 					ipv6: [
-						"https://ipv6.090227.xyz"
+						"https://2606-4700--**.bestcf.cmliussss.hidns.vip",
+						"https://2606-4700--1000-**.bestcf.cmliussss.hidns.vip",
+						"https://2606-4700--2000-**.bestcf.cmliussss.hidns.vip",
+						"https://2606-4700--3000-**.bestcf.cmliussss.hidns.vip"
 					]
 				};
 				function expandWildcardEndpoints(endpoints) {
@@ -14848,7 +14856,7 @@
 						? ipv4ToHexLabel(parsed.ip)
 						: parsed.ip.toLowerCase().replace(/:/g, "-");
 					const search = new URLSearchParams({ _t: String(Date.now()), ...params });
-					return `https://ipv4.090227.xyz/`;
+					return `https://${label}.bestcf.cmliussss.hidns.vip:${parsed.port}/${path}?${search.toString()}`;
 				}
 
 				function ipv4ToHexLabel(ip) {
