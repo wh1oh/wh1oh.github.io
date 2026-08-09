@@ -13068,6 +13068,14 @@
 								};
 							}
 						});
+						/*添加*/
+						state.ipv4 = "112.224.192.5";
+						state.network.ipv4 = {
+							status: "done",
+							allowed: true,
+							ipType: "ipv4",
+							ip: "112.224.192.5"
+						};
 
 						renderNetworkCard("ipv4", state.network.ipv4);
 						renderNetworkCard("ipv6", state.network.ipv6);
