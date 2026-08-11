@@ -9763,7 +9763,7 @@
 					</div>
 
 					<div class="module-footer">
-						<button type="button" class="btn btn-online-optimize hidden-section" id="onlineOptimizeBtn"
+						<button type="button" class="btn btn-online-optimize hidden-section" id="onlineOptimizeBtn" disabled
 							onclick="openOnlineOptimizeModal()">在线优选</button>
 						<button type="button" class="btn btn-api-optimize hidden-section" id="apiOptimizeBtn"
 							onclick="openAPIOptimizeModal()">订阅接口</button>
@@ -9843,7 +9843,7 @@
 							<label>传输协议</label>
 							<select id="transport" title="传输协议" onchange="handleTransportChange()">
 								<option value="ws">WebSocket 快！</option>
-								<option value="xhttp">XHTTP 稳！</option>
+								<option value="xhttp">XHTTP 不稳！</option>
 								<option value="grpc">gRPC 花里胡笑！</option>
 							</select>
 						</div>
