@@ -9763,7 +9763,7 @@
 					</div>
 
 					<div class="module-footer">
-						<button type="button" class="btn btn-online-optimize hidden-section" id="onlineOptimizeBtn" disabled
+						<button type="button" class="btn btn-online-optimize hidden-section" id="onlineOptimizeBtn"
 							onclick="openOnlineOptimizeModal()">在线优选</button>
 						<button type="button" class="btn btn-api-optimize hidden-section" id="apiOptimizeBtn"
 							onclick="openAPIOptimizeModal()">订阅接口</button>
@@ -12748,7 +12748,8 @@
 				</div>
 
 				<p class="bestcf-credit">
-					© BestCF · 在线优选得以实现，离不开巨人的肩膀。感谢 @ktff、@Lfreea、<a href="https://hidoha.net" target="_blank"
+					© BestCF · 在线优选得以实现，离不开巨人的肩膀。感谢 <a href="https://t.me/Six00NotLao" target="_blank"
+						rel="noopener noreferrer">@600不是佬</a>、@ktff、@Lfreea、<a href="https://hidoha.net" target="_blank"
 						rel="noopener noreferrer">HiDNS</a> 的探索与贡献。
 				</p>
 			</main>
@@ -12797,24 +12798,78 @@
 					// Standalone demo mode does not need parent theme sync.
 				}
 				const TLS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
+				const BEST_HOSTS = [
+					"bestcf.cmliussss.hidns.vip",
+					"ns.psb.kdns.fr"
+				];
 				const DETECT_ENDPOINTS = {
 					ipv4: [
-						"https://671F04**.bestcf.cmliussss.hidns.vip",
-						"https://6CA2C0**.bestcf.cmliussss.hidns.vip",
-						"https://BC7260**.bestcf.cmliussss.hidns.vip",
-						"https://681000**.bestcf.cmliussss.hidns.vip",
-						"https://681800**.bestcf.cmliussss.hidns.vip",
-						"https://AC4000**.bestcf.cmliussss.hidns.vip"
+						"https://671F04**.{{host}}",
+						"https://6CA2C0**.{{host}}",
+						"https://BC7260**.{{host}}",
+						"https://681000**.{{host}}",
+						"https://681800**.{{host}}",
+						"https://AC4000**.{{host}}"
 					],
 					ipv6: [
-						"https://2606-4700--**.bestcf.cmliussss.hidns.vip",
-						"https://2606-4700--1000-**.bestcf.cmliussss.hidns.vip",
-						"https://2606-4700--2000-**.bestcf.cmliussss.hidns.vip",
-						"https://2606-4700--3000-**.bestcf.cmliussss.hidns.vip"
+						"https://2606-4700--**.{{host}}",
+						"https://2606-4700--1000-**.{{host}}",
+						"https://2606-4700--2000-**.{{host}}",
+						"https://2606-4700--3000-**.{{host}}"
 					]
 				};
 				function expandWildcardEndpoints(endpoints) {
 					return endpoints.map(ep => ep.replace(/\*\*/g, () => Math.floor(Math.random() * 255 + 1).toString(16).padStart(2, '0')));
+				}
+				const BEST_HOST_CACHE_KEY = "bestcf:active-best-host";
+				let activeBestHost = "";
+
+				function readCachedBestHost() {
+					try {
+						return window.localStorage.getItem(BEST_HOST_CACHE_KEY) || "";
+					} catch (error) {
+						return "";
+					}
+				}
+
+				function cacheBestHost(host) {
+					if (!host) return;
+					activeBestHost = host;
+					try {
+						window.localStorage.setItem(BEST_HOST_CACHE_KEY, host);
+					} catch (error) {
+						// Some embedded contexts can deny storage; in-memory restore still works.
+					}
+				}
+
+				function buildDetectEndpoints(family, host) {
+					return expandWildcardEndpoints(DETECT_ENDPOINTS[family].map(ep => ep.replace("{{host}}", host)));
+				}
+
+				async function resolveBestHost() {
+					if (!activeBestHost) activeBestHost = readCachedBestHost();
+					if (activeBestHost && BEST_HOSTS.includes(activeBestHost)) return activeBestHost;
+
+					for (const host of BEST_HOSTS) {
+						try {
+							const allEndpoints = [
+								...buildDetectEndpoints("ipv4", host),
+								...buildDetectEndpoints("ipv6", host)
+							];
+							await fetchJsonFromFastestEndpoint(allEndpoints, "ip.json", 6500);
+							cacheBestHost(host);
+							return host;
+						} catch (error) {
+							// This host failed; try the next one.
+						}
+					}
+
+					cacheBestHost(BEST_HOSTS[0]);
+					return BEST_HOSTS[0];
+				}
+
+				function getActiveBestHost() {
+					return activeBestHost || BEST_HOSTS[0];
 				}
 				const IP_LIBRARIES = [
 					{ label: "个人列表USv4", family: "ipv4", url: "https://raw.githubusercontent.com/legalishomo/cc/refs/heads/main/US_ip.txt" },
@@ -13114,9 +13169,10 @@
 					updateActionAvailability();
 
 					try {
+						const bestHost = await resolveBestHost();
 						const checks = await Promise.allSettled([
-							detectStack("ipv4"),
-							detectStack("ipv6")
+							detectStack("ipv4", bestHost),
+							detectStack("ipv6", bestHost)
 						]);
 
 						checks.forEach((result, index) => {
@@ -13252,8 +13308,8 @@
 					window.location.reload();
 				}
 
-				async function detectStack(family) {
-					const { endpoint, data } = await fetchJsonFromFastestEndpoint(expandWildcardEndpoints(DETECT_ENDPOINTS[family]), "ip.json", 6500);
+				async function detectStack(family, host) {
+					const { endpoint, data } = await fetchJsonFromFastestEndpoint(buildDetectEndpoints(family, host), "ip.json", 6500);
 					const allowed = data.country === "CN";
 					return {
 						status: "done",
@@ -14935,7 +14991,7 @@
 						? ipv4ToHexLabel(parsed.ip)
 						: parsed.ip.toLowerCase().replace(/:/g, "-");
 					const search = new URLSearchParams({ _t: String(Date.now()), ...params });
-					return `https://${label}.bestcf.cmliussss.hidns.vip:${parsed.port}/${path}?${search.toString()}`;
+					return `https://${label}.${getActiveBestHost()}:${parsed.port}/${path}?${search.toString()}`;
 				}
 
 				function ipv4ToHexLabel(ip) {
