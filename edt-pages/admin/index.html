@@ -6387,6 +6387,533 @@
 			box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
 		}
 
+		/* ==================== 开始优选 - 方式选择弹窗 ==================== */
+		.optimize-start-modal {
+			max-width: 720px;
+			width: min(95vw, 720px);
+			padding: 34px 30px 30px;
+			text-align: center;
+		}
+
+		.optimize-start-title {
+			font-size: 22px;
+			font-weight: 700;
+			color: #0f172a;
+			margin: 0 0 6px;
+		}
+
+		.optimize-start-subtitle {
+			font-size: 13px;
+			color: #64748b;
+			margin: 0 0 24px;
+		}
+
+		.optimize-start-cards {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+		}
+
+		.optimize-start-card {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 9px;
+			padding: 24px 18px;
+			border-radius: 14px;
+			border: 2px solid #e2e8f0;
+			background: #f8fafc;
+			cursor: pointer;
+			text-align: center;
+			font-family: inherit;
+			transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+		}
+
+		.optimize-start-card:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 12px 28px rgba(23, 32, 51, .12);
+		}
+
+		.optimize-start-card:active {
+			transform: translateY(0);
+		}
+
+		/* 在线优选卡片：默认绿色高亮，暗示优先选择 */
+		.optimize-card-online {
+			position: relative;
+			border-color: #10b981;
+			background: linear-gradient(180deg, #ecfdf5 0, #f8fafc 100%);
+			box-shadow: 0 4px 14px rgba(16, 185, 129, .18);
+		}
+
+		.optimize-card-badge {
+			display: inline-block;
+			margin-left: 6px;
+			padding: 2px 8px;
+			border-radius: 999px;
+			font-size: 11px;
+			font-weight: 600;
+			color: #fff;
+			background: linear-gradient(135deg, #10b981 0, #059669 100%);
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+
+		.optimize-card-online:hover {
+			border-color: #10b981;
+			background: linear-gradient(180deg, #ecfdf5 0, #f8fafc 100%);
+		}
+
+		.optimize-card-local:hover {
+			border-color: #6366f1;
+			background: linear-gradient(180deg, #eef2ff 0, #f8fafc 100%);
+		}
+
+		.optimize-card-icon {
+			font-size: 34px;
+			line-height: 1;
+		}
+
+		.optimize-card-title {
+			font-size: 18px;
+			font-weight: 700;
+			color: #0f172a;
+		}
+
+		.optimize-card-desc {
+			font-size: 13px;
+			line-height: 1.65;
+			color: #475569;
+		}
+
+		.optimize-card-tag {
+			font-size: 12px;
+			line-height: 1.5;
+			padding: 5px 10px;
+			border-radius: 8px;
+			width: 100%;
+		}
+
+		.optimize-card-tag.tag-pro {
+			color: #047857;
+			background: #d1fae5;
+		}
+
+		.optimize-card-tag.tag-con {
+			color: #b45309;
+			background: #fef3c7;
+		}
+
+		html.dark-mode .optimize-start-title,
+		html.dark-mode .optimize-card-title {
+			color: var(--text-primary);
+		}
+
+		html.dark-mode .optimize-start-subtitle {
+			color: #94a3b8;
+		}
+
+		html.dark-mode .optimize-start-card {
+			background: rgba(148, 163, 184, .08);
+			border-color: rgba(148, 163, 184, .18);
+		}
+
+		html.dark-mode .optimize-card-online {
+			border-color: #10b981;
+			background: rgba(16, 185, 129, .12);
+			box-shadow: 0 4px 14px rgba(16, 185, 129, .22);
+		}
+
+		html.dark-mode .optimize-card-online:hover {
+			border-color: #10b981;
+			background: rgba(16, 185, 129, .14);
+		}
+
+		html.dark-mode .optimize-card-local:hover {
+			border-color: #6366f1;
+			background: rgba(99, 102, 241, .16);
+		}
+
+		html.dark-mode .optimize-card-desc {
+			color: #cbd5e1;
+		}
+
+		html.dark-mode .optimize-card-tag.tag-pro {
+			color: #6ee7b7;
+			background: rgba(16, 185, 129, .15);
+		}
+
+		html.dark-mode .optimize-card-tag.tag-con {
+			color: #fcd34d;
+			background: rgba(245, 158, 11, .15);
+		}
+
+		/* ==================== 本地优选 - 工具目录弹窗 ==================== */
+		.local-optimize-modal {
+			max-width: 640px;
+			width: min(95vw, 640px);
+			max-height: 82vh;
+			overflow-y: auto;
+			text-align: left;
+			padding: 28px 26px 26px;
+			scrollbar-width: thin;
+			scrollbar-color: #818cf8 transparent;
+		}
+
+		.local-optimize-modal::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		.local-optimize-modal::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		.local-optimize-modal::-webkit-scrollbar-thumb {
+			background: linear-gradient(180deg, #a5b4fc, #6366f1);
+			border-radius: 999px;
+			border: 2px solid transparent;
+			background-clip: padding-box;
+		}
+
+		.local-optimize-modal::-webkit-scrollbar-thumb:hover {
+			background: linear-gradient(180deg, #818cf8, #4f46e5);
+		}
+
+		.local-optimize-title {
+			font-size: 20px;
+			font-weight: 700;
+			color: #0f172a;
+			margin: 0 0 4px;
+		}
+
+		.local-optimize-subtitle {
+			font-size: 13px;
+			color: #64748b;
+			margin: 0 0 20px;
+		}
+
+		.local-optimize-tools {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.local-optimize-footer {
+			margin-top: 20px;
+			text-align: center;
+			font-size: 12px;
+			color: #94a3b8;
+			letter-spacing: .5px;
+		}
+
+		.local-ui-filter {
+			display: flex;
+			flex-wrap: nowrap;
+			gap: 8px;
+			margin-bottom: 14px;
+			overflow-x: auto;
+			-webkit-overflow-scrolling: touch;
+			scrollbar-width: none;
+			padding-bottom: 2px;
+			scroll-snap-type: x proximity;
+		}
+
+		.local-ui-filter::-webkit-scrollbar {
+			display: none;
+		}
+
+		.local-ui-filter-btn {
+			flex-shrink: 0;
+			padding: 4px 11px;
+			border-radius: 999px;
+			border: 1px solid transparent;
+			background: #f1f5f9;
+			color: #475569;
+			font-size: 12px;
+			font-weight: 500;
+			white-space: nowrap;
+			cursor: pointer;
+			scroll-snap-align: start;
+			transition: background .18s ease-out, color .18s ease-out, border-color .18s ease-out;
+		}
+
+		.local-ui-filter-btn:hover {
+			background: #e2e8f0;
+			color: #0f172a;
+		}
+
+		.local-ui-filter-btn.is-active {
+			background: #4f46e5;
+			color: #fff;
+			border-color: #4f46e5;
+		}
+
+		@keyframes localToolFadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(6px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.local-tool-card {
+			display: flex;
+			flex-direction: column;
+			gap: 9px;
+			padding: 18px 20px;
+			border: 2px solid #e2e8f0;
+			border-radius: 14px;
+			background: #f8fafc;
+			transition: border-color .18s ease, box-shadow .18s ease;
+			animation: localToolFadeIn .3s ease-out both;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.local-tool-card {
+				animation: none !important;
+			}
+		}
+
+		.local-tool-card:hover {
+			border-color: #6366f1;
+			box-shadow: 0 8px 20px rgba(23, 32, 51, .08);
+		}
+
+		.local-tool-head {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.local-tool-name {
+			font-size: 16px;
+			font-weight: 700;
+			color: #0f172a;
+		}
+
+		.local-tool-author {
+			font-size: 12px;
+			color: #4f46e5;
+			background: #eef2ff;
+			padding: 2px 8px;
+			border-radius: 999px;
+		}
+
+		.local-tool-ui {
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+			font-size: 11.5px;
+			line-height: 1.5;
+			padding: 3px 10px;
+			border-radius: 999px;
+			background: #f1f5f9;
+			color: #475569;
+		}
+
+		.local-tool-ui-webui {
+			background: #ecfeff;
+			color: #0e7490;
+		}
+
+		.local-tool-ui-gui {
+			background: #fdf4ff;
+			color: #a21caf;
+		}
+
+		.local-tool-ui-cli {
+			background: #fffbeb;
+			color: #b45309;
+		}
+
+		.local-tool-desc {
+			font-size: 13px;
+			line-height: 1.7;
+			color: #475569;
+		}
+
+		.local-tool-platforms {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+		}
+
+		.local-tool-platform {
+			font-size: 11.5px;
+			padding: 3px 10px;
+			border-radius: 999px;
+			background: #e2e8f0;
+			color: #475569;
+		}
+
+		.local-tool-actions {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 2px;
+		}
+
+		.local-tool-github {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 16px;
+			border-radius: 9px;
+			border: 0;
+			background: linear-gradient(135deg, #3b82f6 0, #1d4ed8 100%);
+			color: #fff;
+			font-size: 13.5px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: transform .15s ease, box-shadow .15s ease;
+		}
+
+		.local-tool-github:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 6px 16px rgba(37, 99, 235, .35);
+		}
+
+		.local-tools-loading,
+		.local-tools-error {
+			text-align: center;
+			padding: 36px 16px;
+			color: #64748b;
+			font-size: 14px;
+			line-height: 1.8;
+		}
+
+		.local-tools-error {
+			color: #b45309;
+		}
+
+		.local-tools-retry {
+			display: inline-block;
+			margin-top: 12px;
+			padding: 8px 22px;
+			border-radius: 9px;
+			border: 0;
+			background: linear-gradient(135deg, #f59e0b 0, #d97706 100%);
+			color: #fff;
+			font-size: 13.5px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+
+		html.dark-mode .local-optimize-title,
+		html.dark-mode .local-tool-name {
+			color: var(--text-primary);
+		}
+
+		html.dark-mode .local-optimize-subtitle {
+			color: #94a3b8;
+		}
+
+		html.dark-mode .local-optimize-modal {
+			scrollbar-color: #818cf8 rgba(148, 163, 184, .12);
+		}
+
+		html.dark-mode .local-optimize-modal::-webkit-scrollbar-thumb {
+			background: linear-gradient(180deg, #a5b4fc, #818cf8);
+		}
+
+		html.dark-mode .local-optimize-modal::-webkit-scrollbar-thumb:hover {
+			background: linear-gradient(180deg, #c7d2fe, #a5b4fc);
+		}
+
+		html.dark-mode .local-optimize-footer {
+			color: #64748b;
+		}
+
+		html.dark-mode .local-ui-filter-btn {
+			background: rgba(148, 163, 184, .14);
+			color: #cbd5e1;
+			border-color: rgba(148, 163, 184, .22);
+		}
+
+		html.dark-mode .local-ui-filter-btn:hover {
+			background: rgba(148, 163, 184, .24);
+			color: #f1f5f9;
+		}
+
+		html.dark-mode .local-ui-filter-btn.is-active {
+			background: #4f46e5;
+			color: #fff;
+			border-color: #4f46e5;
+		}
+
+		html.dark-mode .local-tool-card {
+			background: rgba(148, 163, 184, .08);
+			border-color: rgba(148, 163, 184, .18);
+		}
+
+		html.dark-mode .local-tool-card:hover {
+			border-color: #6366f1;
+		}
+
+		html.dark-mode .local-tool-author {
+			color: #a5b4fc;
+			background: rgba(99, 102, 241, .18);
+		}
+
+		html.dark-mode .local-tool-ui {
+			background: rgba(148, 163, 184, .16);
+			color: #cbd5e1;
+		}
+
+		html.dark-mode .local-tool-ui-webui {
+			background: rgba(14, 116, 144, .2);
+			color: #67e8f9;
+		}
+
+		html.dark-mode .local-tool-ui-gui {
+			background: rgba(162, 28, 175, .2);
+			color: #f0abfc;
+		}
+
+		html.dark-mode .local-tool-ui-cli {
+			background: rgba(180, 83, 9, .2);
+			color: #fcd34d;
+		}
+
+		html.dark-mode .local-tool-desc {
+			color: #cbd5e1;
+		}
+
+		html.dark-mode .local-tool-platform {
+			background: rgba(148, 163, 184, .16);
+			color: #cbd5e1;
+		}
+
+		html.dark-mode .local-tools-loading {
+			color: #94a3b8;
+		}
+
+		html.dark-mode .local-tools-error {
+			color: #fcd34d;
+		}
+
+		@media (max-width: 560px) {
+			.optimize-start-cards {
+				grid-template-columns: 1fr;
+			}
+
+			.optimize-start-modal {
+				padding: 24px 18px 20px;
+			}
+
+			.local-tool-actions {
+				justify-content: stretch;
+			}
+
+			.local-tool-github {
+				width: 100%;
+				justify-content: center;
+			}
+		}
+
 		html.dark-mode .online-optimize-fallback-close:hover {
 			background: #111827;
 			color: #ffffff;
@@ -9764,7 +10291,7 @@
 
 					<div class="module-footer">
 						<button type="button" class="btn btn-online-optimize hidden-section" id="onlineOptimizeBtn"
-							onclick="openOnlineOptimizeModal()">在线优选</button>
+							onclick="openOptimizeStartModal()">开始优选</button>
 						<button type="button" class="btn btn-api-optimize hidden-section" id="apiOptimizeBtn"
 							onclick="openAPIOptimizeModal()">订阅接口</button>
 						<button type="button" class="btn btn-chain-proxy hidden-section" id="chainProxyBtn"
@@ -10706,6 +11233,48 @@
 			<button type="button" class="online-optimize-fallback-close" title="关闭" aria-label="关闭"
 				onclick="closeOnlineOptimizeModal()">×</button>
 			<iframe id="onlineOptimizeFrame" class="online-optimize-frame" title="在线优选"></iframe>
+		</div>
+	</div>
+
+	<!-- 开始优选 - 优选方式选择弹窗 -->
+	<div class="modal-overlay" id="optimizeStartModal" onclick="closeOptimizeStartModal(event)">
+		<div class="modal optimize-start-modal" onclick="event.stopPropagation()">
+			<button type="button" class="modal-close" onclick="closeOptimizeStartModal()" aria-label="关闭">×</button>
+			<h2 class="optimize-start-title">🚀 开始优选</h2>
+			<p class="optimize-start-subtitle">请选择一种优选方式</p>
+			<div class="optimize-start-cards">
+				<button type="button" class="optimize-start-card optimize-card-online" onclick="chooseOnlineOptimize()">
+					<span class="optimize-card-icon">🌐</span>
+					<span class="optimize-card-title">在线优选<span class="optimize-card-badge">推荐</span></span>
+					<span class="optimize-card-desc">通过浏览器实时进行在线优选，兼容性高，有浏览器就能进行</span>
+					<span class="optimize-card-tag tag-pro">✅ 优点：无需安装，即开即用</span>
+					<span class="optimize-card-tag tag-con">⚠️ 缺点：易受运营商阻断，阻断时无法使用</span>
+				</button>
+				<button type="button" class="optimize-start-card optimize-card-local" onclick="chooseLocalOptimize()">
+					<span class="optimize-card-icon">💻</span>
+					<span class="optimize-card-title">本地优选</span>
+					<span class="optimize-card-desc">下载客户端在本地设备上运行，灵活多变，功能性更多</span>
+					<span class="optimize-card-tag tag-pro">✅ 优点：灵活多变，功能丰富</span>
+					<span class="optimize-card-tag tag-con">⚠️ 缺点：需下载客户端，在本地设备上运行</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 本地优选 - CF 优选工具目录弹窗 -->
+	<div class="modal-overlay" id="localOptimizeModal" onclick="closeLocalOptimizeModal(event)">
+		<div class="modal local-optimize-modal" onclick="event.stopPropagation()">
+			<button type="button" class="modal-close" onclick="closeLocalOptimizeModal()" aria-label="关闭">×</button>
+			<h2 class="local-optimize-title">💻 本地优选工具</h2>
+			<p class="local-optimize-subtitle">选择一款工具，点击「前往 GitHub」即可在新窗口查看与下载</p>
+			<div class="local-ui-filter" id="localUiFilter">
+				<button type="button" class="local-ui-filter-btn is-active" data-ui="all" onclick="setLocalUiFilter('all')">全部</button>
+				<button type="button" class="local-ui-filter-btn" data-ui="webui" onclick="setLocalUiFilter('webui')">🌐 网页界面</button>
+				<button type="button" class="local-ui-filter-btn" data-ui="gui" onclick="setLocalUiFilter('gui')">🖥️ 图形界面</button>
+				<button type="button" class="local-ui-filter-btn" data-ui="cli" onclick="setLocalUiFilter('cli')">⌨️ 命令行CLI</button>
+			</div>
+			<div id="localOptimizeToolList" class="local-optimize-tools"><!-- 动态渲染 --></div>
+			<div class="local-optimize-footer">欢迎优选项目投稿</div>
 		</div>
 	</div>
 
@@ -12167,6 +12736,7 @@
 				.network-warning-actions {
 					display: flex;
 					justify-content: flex-end;
+					gap: 12px;
 					padding: 0 24px 24px;
 				}
 
@@ -12194,6 +12764,32 @@
 					background: #fff7e6;
 					color: #6f3d0a;
 					box-shadow: 0 16px 36px rgba(92, 54, 9, 0.32);
+				}
+
+				/* 本地优选（推荐）按钮：绿色渐变实心，突出引导前往 */
+				.network-warning-actions .btn-local-warning {
+					background: linear-gradient(135deg, #10b981 0, #059669 100%);
+					color: #ffffff;
+					border-color: rgba(255, 255, 255, 0.9);
+					box-shadow: 0 12px 28px rgba(6, 95, 70, 0.5), 0 0 0 4px rgba(16, 185, 129, 0.26);
+				}
+
+				.network-warning-modal.is-request-failed .network-warning-actions .btn-local-warning {
+					color: #ffffff;
+				}
+
+				.network-warning-actions .btn-local-warning:hover:not(:disabled) {
+					background: linear-gradient(135deg, #34d399 0, #10b981 100%);
+					color: #ffffff;
+					border-color: #ffffff;
+					box-shadow: 0 16px 36px rgba(6, 95, 70, 0.6), 0 0 0 4px rgba(16, 185, 129, 0.36);
+					transform: translateY(-1px);
+				}
+
+				.network-warning-modal.is-request-failed .network-warning-actions .btn-local-warning:hover:not(:disabled) {
+					background: linear-gradient(135deg, #34d399 0, #10b981 100%);
+					color: #ffffff;
+					box-shadow: 0 16px 36px rgba(6, 95, 70, 0.6), 0 0 0 4px rgba(16, 185, 129, 0.36);
 				}
 
 				@keyframes networkWarningPop {
@@ -12768,6 +13364,7 @@
 						</details>
 					</div>
 					<div class="network-warning-actions">
+						<button class="btn btn-local-warning" id="networkWarningLocalBtn" type="button">本地优选</button>
 						<button class="btn" id="networkWarningConfirmBtn" type="button">确定</button>
 					</div>
 				</div>
@@ -12960,7 +13557,8 @@
 					networkWarningSummary: $("#networkWarningSummary"),
 					networkWarningDetails: $("#networkWarningDetails"),
 					networkWarningJson: $("#networkWarningJson"),
-					networkWarningConfirmBtn: $("#networkWarningConfirmBtn")
+					networkWarningConfirmBtn: $("#networkWarningConfirmBtn"),
+					networkWarningLocalBtn: $("#networkWarningLocalBtn")
 				};
 
 				document.addEventListener("DOMContentLoaded", () => {
@@ -13074,6 +13672,7 @@
 					});
 					els.closeBestCFBtn.addEventListener("click", closeBestCFModule);
 					els.networkWarningConfirmBtn.addEventListener("click", confirmNetworkWarning);
+					els.networkWarningLocalBtn.addEventListener("click", openLocalOptimizeFromWarning);
 					document.querySelectorAll("[data-sort]").forEach((button) => {
 						button.addEventListener("click", () => setResultSort(button.dataset.sort));
 					});
@@ -13220,25 +13819,25 @@
 					const completed = entries.filter(({ info }) => info && info.status === "done");
 					const nonCn = completed.filter(({ info }) => !info.allowed);
 
-					if (nonCn.length) {
-						return {
-							kind: "non-cn",
-							heading: "红牌警告",
-							title: "检测到当前网络出口不是 CN 直连",
-							message: "请确认浏览器当前网络是否经过了 代理、VPN 或 境外网络，\n在线优选仅有 CN 直连网络环境才可以实现！",
-							rows: nonCn,
-							details: completed
-						};
-					}
-
+				if (nonCn.length) {
 					return {
-						kind: "request-failed",
-						heading: "检测失败",
-						title: "优选域名请求失败",
-						message: "优选域名请求失败，自行检查网络环境，确保优选域名可访问。",
-						rows: entries,
+						kind: "non-cn",
+						heading: "红牌警告",
+						title: "检测到当前网络出口不是 CN 直连",
+						message: "请确认浏览器当前网络是否经过了 代理、VPN 或 境外网络，\n在线优选仅有 CN 直连网络环境才可以实现！\n当前网络环境无法进行在线优选，可尝试使用「本地优选」。",
+						rows: nonCn,
 						details: completed
 					};
+				}
+
+				return {
+					kind: "request-failed",
+					heading: "黄牌警告",
+					title: "优选域名请求失败",
+					message: "当前网络环境无法进行在线优选，但可尝试使用「本地优选」。\n请自行检查网络环境，确保优选域名可访问。",
+					rows: entries,
+					details: completed
+				};
 				}
 
 				function renderNetworkWarning(context) {
@@ -13306,6 +13905,29 @@
 					}
 
 					window.location.reload();
+				}
+
+				function openLocalOptimizeFromWarning() {
+					// 关闭当前警告弹窗
+					els.networkWarningOverlay.classList.remove("is-visible");
+
+					if (window.parent && window.parent !== window) {
+						try {
+							if (typeof window.parent.switchToLocalOptimizeFromOnline === "function") {
+								window.parent.switchToLocalOptimizeFromOnline();
+								return;
+							}
+						} catch (error) {
+							// Fall back to postMessage below when direct parent access is unavailable.
+						}
+
+						try {
+							window.parent.postMessage({ type: "bestcf-open-local-optimize" }, "*");
+							return;
+						} catch (error) {
+							// Ignore — nothing else we can do from inside the frame.
+						}
+					}
 				}
 
 				async function detectStack(family, host) {
@@ -21849,10 +22471,12 @@
 				const timeoutId = setTimeout(() => controller.abort(), 5000); // 5秒超时
 
 				let response;
+				let fromPrimary = false;
 				try {
 					response = await fetch(`https://api.ipapi.is/?q=${cleanIp}`, { signal: controller.signal });
 					clearTimeout(timeoutId);
 					if (!response.ok) throw new Error('Primary API failed');
+					fromPrimary = true;
 				} catch (e) {
 					console.warn('Primary IP API failed, trying fallback...', e);
 					response = await fetch(`https://api.090227.xyz/api/ipapi?ip=${cleanIp}`);
@@ -21861,8 +22485,11 @@
 
 				const data = await response.json();
 
+				// 主 API(ipapi.is) 返回新版扁平结构，归一化为旧版嵌套结构供弹窗展示；fallback 数据保持原样透传
+				const modalData = fromPrimary ? normalizeIpapiData(data) : data;
+
 				// 显示详情弹窗
-				showIpDetailModal(data);
+				showIpDetailModal(modalData);
 			} catch (error) {
 				showToast('❌ 查询IP详细信息失败');
 				console.error('IP查询错误:', error);
@@ -23778,6 +24405,185 @@
 			}
 		}
 
+		// ==================== 开始优选 - 方式选择 ====================
+
+		const CF_TOOLS_RAW_URL = 'https://raw.githubusercontent.com/cmliu/cmliu/refs/heads/main/json/best-cf-tools.json';
+		let localOptimizeProjects = [];
+		let localUiFilter = 'all';
+
+		// 打开"开始优选"方式选择弹窗
+		function openOptimizeStartModal() {
+			const modal = document.getElementById('optimizeStartModal');
+			if (!modal) return;
+			modal.classList.add('show');
+		}
+
+		// 关闭"开始优选"方式选择弹窗
+		function closeOptimizeStartModal(event) {
+			if (event && event.target !== event.currentTarget) return;
+			const modal = document.getElementById('optimizeStartModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		// 选择"在线优选"：关闭选择弹窗并打开在线优选全屏模块
+		function chooseOnlineOptimize() {
+			closeOptimizeStartModal();
+			openOnlineOptimizeModal();
+		}
+
+		// 选择"本地优选"：关闭选择弹窗并打开本地优选工具目录弹窗
+		function chooseLocalOptimize() {
+			closeOptimizeStartModal();
+			openLocalOptimizeModal();
+		}
+
+		// ==================== 本地优选 - CF 优选工具目录 ====================
+
+		// 打开本地优选工具目录弹窗（请求RAW拉取工具清单）
+		async function openLocalOptimizeModal() {
+			const modal = document.getElementById('localOptimizeModal');
+			const list = document.getElementById('localOptimizeToolList');
+			if (!modal || !list) return;
+
+			modal.classList.add('show');
+
+			// 已加载过则直接显示，避免重复请求
+			if (list.dataset.loaded === 'true') return;
+
+			list.innerHTML = '<div class="local-tools-loading">⏳ 正在拉取 CF 优选工具目录…</div>';
+
+			try {
+				const jsonText = await fetchWithAutoMirror(CF_TOOLS_RAW_URL + '?_t=' + Date.now(), 'CF优选工具目录');
+				const data = JSON.parse(jsonText);
+				const projects = Array.isArray(data && data.projects) ? data.projects : [];
+				renderLocalOptimizeTools(list, projects);
+				list.dataset.loaded = 'true';
+			} catch (error) {
+				console.error('[请求RAW] CF优选工具目录拉取失败:', error);
+				list.innerHTML = `
+					<div class="local-tools-error">
+						❌ 工具目录拉取失败，请检查网络后重试<br>
+						<button type="button" class="local-tools-retry" onclick="openLocalOptimizeModal()">重试</button>
+					</div>`;
+			}
+		}
+
+		// 渲染本地优选工具卡片
+		function renderLocalOptimizeTools(list, projects) {
+			localOptimizeProjects = projects;
+
+			// 同步类型筛选按钮高亮态，保证弹窗重开时高亮一致
+			const filterButtons = document.querySelectorAll('#localUiFilter .local-ui-filter-btn');
+			filterButtons.forEach(btn => {
+				btn.classList.toggle('is-active', btn.dataset.ui === localUiFilter);
+			});
+
+			if (!projects.length) {
+				list.innerHTML = '<div class="local-tools-error">😕 暂无可用的本地优选工具</div>';
+				return;
+			}
+
+			const uiLabels = {
+				webui: { emoji: '🌐', label: '网页界面' },
+				gui: { emoji: '🖥️', label: '图形界面' },
+				cli: { emoji: '⌨️', label: '命令行CLI' }
+			};
+
+			// 按类型筛选，保留原始索引（openLocalToolGitHub 依赖 localOptimizeProjects 索引）
+			const filtered = projects
+				.map((project, index) => ({ project, index }))
+				.filter(({ project }) => {
+					if (localUiFilter === 'all') return true;
+					const uiValues = Array.isArray(project.ui)
+						? project.ui.map(u => String(u).trim().toLowerCase())
+						: [];
+					return uiValues.includes(localUiFilter);
+				});
+
+			if (!filtered.length) {
+				const currentLabel = (uiLabels[localUiFilter] && uiLabels[localUiFilter].label) || '该';
+				list.innerHTML = `<div class="local-tools-error">😕 没有「${currentLabel}」类型的工具</div>`;
+				return;
+			}
+
+			list.innerHTML = filtered.map(({ project, index }, i) => {
+				const name = escapeHtml(String(project.name || '未命名工具'));
+				const author = project.author ? escapeHtml(String(project.author)) : '';
+				const description = project.description ? escapeHtml(String(project.description)) : '';
+				const platforms = Array.isArray(project.platforms) ? project.platforms : [];
+				const platformBadges = platforms
+					.map(p => `<span class="local-tool-platform">${escapeHtml(String(p))}</span>`)
+					.join('');
+				const uiList = Array.isArray(project.ui) ? project.ui : [];
+				const uiBadges = uiList
+					.filter(u => u !== null && u !== undefined && String(u).trim() !== '')
+					.map(u => {
+						const key = String(u).trim().toLowerCase();
+						const meta = uiLabels[key];
+						if (!meta) {
+							return `<span class="local-tool-ui">${escapeHtml(String(u))}</span>`;
+						}
+						return `<span class="local-tool-ui local-tool-ui-${key}">${meta.emoji} ${meta.label}</span>`;
+					})
+					.join('');
+
+				return `
+					<div class="local-tool-card" style="animation-delay: ${Math.min(i, 8) * 40}ms">
+						<div class="local-tool-head">
+							<span class="local-tool-name">${name}</span>
+							${author ? `<span class="local-tool-author">@${author}</span>` : ''}
+						</div>
+						<div class="local-tool-desc">${description}</div>
+						${(uiBadges || platformBadges) ? `<div class="local-tool-platforms">${uiBadges}${platformBadges}</div>` : ''}
+						<div class="local-tool-actions">
+							<button type="button" class="local-tool-github" onclick="openLocalToolGitHub(${index})">
+								🔗 前往 GitHub
+							</button>
+						</div>
+					</div>`;
+			}).join('');
+		}
+
+		// 设置本地优选工具类型筛选（白名单：all/webui/gui/cli）
+		function setLocalUiFilter(type) {
+			if (type !== 'all' && type !== 'webui' && type !== 'gui' && type !== 'cli') return;
+			localUiFilter = type;
+
+			const filterButtons = document.querySelectorAll('#localUiFilter .local-ui-filter-btn');
+			filterButtons.forEach(btn => {
+				btn.classList.toggle('is-active', btn.dataset.ui === localUiFilter);
+			});
+
+			const list = document.getElementById('localOptimizeToolList');
+			if (list) renderLocalOptimizeTools(list, localOptimizeProjects);
+		}
+
+		// 关闭本地优选工具目录弹窗
+		function closeLocalOptimizeModal(event) {
+			if (event && event.target !== event.currentTarget) return;
+			const modal = document.getElementById('localOptimizeModal');
+			if (modal) modal.classList.remove('show');
+		}
+
+		// 在新窗口打开所选工具的 GitHub 仓库
+		function openLocalToolGitHub(index) {
+			const project = localOptimizeProjects[index];
+			if (!project || !project.url) {
+				showToast('未找到该工具的 GitHub 地址', 'error');
+				return;
+			}
+			window.open(project.url, '_blank', 'noopener');
+		}
+
+		function escapeHtml(value) {
+			return String(value)
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#039;');
+		}
+
 		function appendOnlineOptimizeSelections(lines) {
 			if (!Array.isArray(lines) || lines.length === 0) {
 				showToast('请先勾选需要保存的优选结果', 'warning');
@@ -23808,6 +24614,12 @@
 			return true;
 		}
 
+		// 从在线优选警告弹窗切换到本地优选（关闭在线全屏并打开本地优选工具目录）
+		function switchToLocalOptimizeFromOnline() {
+			closeOnlineOptimizeModal();
+			openLocalOptimizeModal();
+		}
+
 		window.addEventListener('message', (event) => {
 			const frame = document.getElementById('onlineOptimizeFrame');
 			if (!frame || event.source !== frame.contentWindow) return;
@@ -23819,6 +24631,8 @@
 				closeOnlineOptimizeModal();
 			} else if (data.type === 'bestcf-force-reload') {
 				window.location.reload();
+			} else if (data.type === 'bestcf-open-local-optimize') {
+				switchToLocalOptimizeFromOnline();
 			}
 		});
 
@@ -24876,7 +25690,7 @@
 			const apis = [
 				{
 					url: `https://api.ipapi.is`,
-					parse: d => ({ ip: d.ip, loc: `${d.location?.country_code || '未知'} AS${d.asn?.asn || ''} ${d.asn?.org || ''}`.trim() })
+					parse: d => ({ ip: d.ip, loc: `${d.cc || '未知'} AS${d.asn_num || ''} ${d.asn_org || ''}`.trim() })
 				},
 				{
 					url: `https://api.cmliussss.net/api/ipinfo`,
@@ -25581,6 +26395,45 @@
 			tooltip.style.position = 'fixed';
 			tooltip.style.left = left + 'px';
 			tooltip.style.top = top + 'px';
+		}
+
+		// 将 ipapi.is 新版扁平响应归一化为旧版嵌套结构（幂等：已含 location 子对象的旧格式/fallback 数据原样返回）
+		function normalizeIpapiData(data) {
+			if (!data || typeof data !== 'object') return data || {};
+
+			// 幂等保护：已有 location 子对象说明是旧格式或 fallback 数据，无需二次处理
+			if (data.location && typeof data.location === 'object') return data;
+
+			// 复制原对象并保留扁平字段（cc/lat/lon/company_name/asn_num/asn_org 等仍可访问）
+			const normalized = Object.assign({}, data);
+
+			// 构造 location 子对象（新版缺少 country/state/city/timezone，缺省为 undefined）
+			normalized.location = {
+				country: data.country,
+				country_code: data.cc,
+				state: data.state,
+				city: data.city,
+				latitude: data.lat,
+				longitude: data.lon,
+				timezone: data.timezone
+			};
+
+			// 构造 company 子对象（新版仅有 company_name，无 type/abuser_score，缺省为 undefined）
+			normalized.company = {
+				name: data.company_name,
+				type: data.company_type,
+				abuser_score: data.company_abuser_score
+			};
+
+			// 构造 asn 子对象（新版仅有 asn_num/asn_org，无 type/abuser_score，缺省为 undefined）
+			normalized.asn = {
+				asn: data.asn_num,
+				org: data.asn_org,
+				type: data.asn_type,
+				abuser_score: data.asn_abuser_score
+			};
+
+			return normalized;
 		}
 
 		// 显示 IP 详情弹窗
